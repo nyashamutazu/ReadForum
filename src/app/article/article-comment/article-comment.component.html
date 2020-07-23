@@ -1,0 +1,29 @@
+<div class="card__comment">
+    <div class="card__body">
+        <p class="card__text">
+            {{ comment.body }}
+        </p>
+
+    </div>
+    <div class="card__footer">
+        <a [routerLink]="['/profile', comment.author.username]" class="comment__author">
+            <img [src]="comment.author.profileImage" class="card__image">
+        </a>
+        <div class="card__footer--body" >
+            <app-follow-buttons *appShowAuthed="true" [toggler]="toggler" [profile]="comment.author" (mouseenter)="toggler=true" (mouseleave)="toggler=false">
+                <!-- <a [routerLink]="['/profile', comment.author.username]" class="comment__author">
+                    {{ comment.author.username }}
+                </a> -->
+            </app-follow-buttons>
+        </div>
+
+        <div class="card__footer--end">
+            <span class="card__footer--qoute"> {{ comment.dateCreated }}</span>
+            <span class="btn btn__warn" *ngIf="usersComment" (click)="deleteCommentClicked()">
+                <svg class="icon icon__delete">
+                    <use xlink:href="/assets/icons.svg#icon-drive_file_rename_outline"></use>
+                </svg>
+            </span>
+        </div>
+    </div>
+</div>

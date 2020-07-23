@@ -1,0 +1,162 @@
+<div *ngIf="isLoading">
+    <h1>Is Loading</h1>
+</div>
+
+<div *ngIf="!isLoading">
+
+
+    <div class="section">
+        <div class="banner banner__user">
+            <div class="container">
+                <div class="profile__content">
+                    <div class="profile__settings">
+                        <button class="btn btn__primary" (click)="onToggle(1)" *ngIf="isUser && isAuthed">
+                            <svg class="icon icon__primary">
+                                <use xlink:href="/assets/icons.svg#icon-settings"></use>
+                            </svg>
+                        </button>
+                        <div class="dropbox" *ngIf="showDropBox1">
+                            <div class="dropbox__container">
+                                <ul class="dropbox__list">
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link dropbox__link--warn">Edit Profile</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link dropbox__link--warn">Archive</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link dropbox__link--warn">Settings</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Stats</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Sign Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile__content--img">
+                        <img [src]="profile.profileImage" alt="" class="profile__image">
+                    </div>
+                    <div class="profile__content--body">
+                        <h1 class="profile__title"> {{ profile.username }}</h1>
+                        <p class="profile__details">{{ profile.bio }}</p>
+                        <a class="profile__details profile__details--web">https://website.com</a>
+                        <div class="profile__stats--count">
+                            <div class="profile__stats--body">
+                                <h5 class="profile__stats--title">Articles</h5>
+                                <p class="profile__stats--amount">55</p>
+                            </div>
+                            <div class="profile__stats--body">
+                                <h5 class="profile__stats--title">Subscribers</h5>
+                                <p class="profile__stats--amount">980</p>
+                            </div>
+                        </div>
+                        <app-follow-buttons *appShowAuthed="true" [profile]="profile" (toggle)="onToggleFollowing($event)">
+                        </app-follow-buttons>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="banner__user--background">
+            </div>
+        </div>
+    </div>
+
+    <div class="section__secondary">
+        <div class="container">
+            <div class="layout__column--container">
+                <div class="layout__column">
+                    <ul class="profile__nav">
+                        <li class="profile__nav--item">
+                            <a [routerLink]="['/profile', profile.username ]" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }" class="profile__nav--link">
+                                {{ isUser ? 'My Articles' : username + ' articles' }}
+                            </a>
+                        </li>
+                        <li class="profile__nav--item dropbox__holder" *ngIf="!isUser && isAuthed">
+                            <div class="profile__nav--link">
+                                <button class="btn btn__primary" (click)="onToggle(2)">
+                                    <svg class="icon icon__primary">
+                                        <use xlink:href="/assets/icons.svg#icon-more_vert"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="dropbox" *ngIf="showDropBox2">
+                                <div class="dropbox__container">
+                                    <ul class="dropbox__list" >
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link dropbox__link--warn">Restrict</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link dropbox__link--warn">Block</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link dropbox__link--warn">Report</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">About</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Hide My Account</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Add To Lists</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Share Account</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="profile__nav--item dropbox__holder" *ngIf="isUser && isAuthed">
+                            <div class="profile__nav--link">
+                                <button class="btn btn__primary" (click)="onToggle(3)" (clickOutside)="onToggle(4)">
+                                    <svg class="icon icon__primary">
+                                        <use xlink:href="/assets/icons.svg#icon-content_copy"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="dropbox" *ngIf="showDropBox3">
+                                <div class="dropbox__container">
+                                    <ul class="dropbox__list">
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">My Articles</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Liked
+                                                Articles</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Read Later</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Lists</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Hide My Account</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Add To Lists</a>
+                                        </li>
+                                        <li class="dropdox__item">
+                                            <a routerLink="" class="dropbox__link">Share Account</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+
+</div>

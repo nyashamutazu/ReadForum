@@ -1,0 +1,65 @@
+<div class="full__screen">
+    <div class="authentication">
+        <div class="container">
+            <h1 class="heading__secondary">Share your moments and stories with the world</h1>
+            <p class="paragraph__text">Enjoy the articles and posts your love. Create real content and share it with all friends, family, community and world.</p>
+            <app-list-errors [errors]="errors"></app-list-errors>
+            <form [formGroup]="signUpForm" class="form" (submit)="submitForm()" *ngIf="authType == 'sign-up'">
+                <div class="form__controller">
+                    <input type="text" class="form__input" formControlName="username" placeholder="Username">
+                </div>
+                <div class="form__controller">
+                    <input type="email" class="form__input" formControlName="email" placeholder="Email Address">
+                </div>
+                <div class="form__controller">
+                    <input type="email" class="form__input" formControlName="emailRepeat"
+                        placeholder="Repeat Email Address">
+                </div>
+                <div class="form__controller">
+                    <input type="password" class="form__input" formControlName="password" placeholder="Password">
+                </div>
+                <div class="form__controller">
+                    <input type="password" class="form__input" formControlName="passwordRepeat"
+                        placeholder="Repeat Password">
+                </div>
+                <div class="form__controller">
+                    <input type="checkbox" formControlName="checkbox">
+                    <p class="form__checkbox">Creating an account means you are okay with our <a
+                            routerLink="privacy">Terms
+                            of Service, Privacy Police</a> and our default <a routerLink="privacy">Notification
+                            Settings</a>
+                    </p>
+                </div>
+                <div class="form__controller">
+                    <button class="btn btn__primary" [disabled]="!signUpForm.valid" type="submit">{{ title }}</button>
+                </div>
+                <div class="form__controller--footer">
+                    <p class="paragraph__text">
+                        <a routerLink="/sign-in" *ngIf="authType == 'sign-up'">I have an account</a>
+                    </p>
+                </div>
+            </form>
+            <form [formGroup]="loginForm" class="form" (submit)="submitForm()" *ngIf="authType == 'sign-in'">
+                <div class="form__controller">
+                    <input type="email" class="form__input" formControlName="email" placeholder="Email Address">
+                </div>
+                <div class="form__controller">
+                    <input type="password" class="form__input" formControlName="password" placeholder="Password">
+                </div>
+                <div class="form__controller">
+                    <button class="btn btn__primary" [disabled]="!loginForm.valid" type="submit">{{ title }}</button>
+                </div>
+                <div class="form__controller--footer">
+                    <p class="paragraph__text">
+                        <a routerLink="/sign-up" *ngIf="authType == 'sign-in'">I need an account?</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="background">
+        <div class="background__display">
+
+        </div>
+    </div>
+</div>

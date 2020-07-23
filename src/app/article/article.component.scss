@@ -1,0 +1,48 @@
+.article {
+  &__container {
+    border-bottom: 1px solid grey;
+    padding-bottom: 50px;
+  }
+
+  &__tags {
+    padding: 0;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__tag {
+    list-style: none;
+    margin-right: 5px;
+    color: var(--color-primary);
+  }
+
+  &__action {
+    display: flex;
+  }
+  &__actions {
+    padding: 30px 10px;
+    border-bottom: 1px solid grey;
+  }
+
+  &__comments {
+  }
+}
+
+.comment {
+  &__container {
+    padding: 20px 0;
+  }
+
+  &__authentication {
+    padding: 10px 0;
+
+  }
+
+  &__form {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 80px 0;
+  }
+}

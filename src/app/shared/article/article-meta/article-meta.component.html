@@ -1,0 +1,21 @@
+<div class="article__meta">
+  <div class="article__body">
+    <a class="article__image--link" [routerLink]="['/profile', article.author.username]">
+      <img class="article__image" [src]="article.author.profileImage" />
+    </a>
+
+    <div class="article__info">
+      <a class="article__author" [routerLink]="['/profile', article.author.username]">
+        {{ article.author.username }}
+      </a>
+      <!-- <app-follow-buttons [toggler]="toggler" [profile]="article.author" (toggle)="onToggleFollowing($event)"
+        (mouseenter)="toggler=true" (mouseleave)="toggler=false">
+      </app-follow-buttons> -->
+
+      <span class="article__date">
+        {{ article.createdAt }}
+      </span>
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

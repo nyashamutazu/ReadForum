@@ -1,0 +1,68 @@
+<div class="sidebar">
+    <div class="sidebar__container">
+        <div class="sidebar__header">
+            <ul class="sidebar__list">
+                <li class="sidebar__item">
+                    <a routerLink="/" class="sidebar__link" routerLinkActive="active">
+                        Home</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/feed/trending" class="sidebar__link" routerLinkActive="active">
+                        Trending</a></li>
+            </ul>
+        </div>
+        <div class="sidebar__body">
+            <ul class="sidebar__list" *appShowAuthed="true">
+                <li class="sidebar__item">
+                    <a routerLink="/editor" class="sidebar__link" routerLinkActive="active">
+                        New Article</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/" class="sidebar__link" routerLinkActive="active">
+                        My Articles</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/editor" class="sidebar__link" routerLinkActive="active">
+                        Liked Articles</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/editor" class="sidebar__link" routerLinkActive="active">
+                        Read Later</a></li>
+            </ul>
+            <ul class="sidebar__list" *appShowAuthed="true">
+                <!-- <li class="sidebar__item"><a routerLink="['/profile'], user.username" class="sidebar__link"
+                        *ngIf="user.profileImage">
+                        Profile
+                    </a></li> -->
+                <li class="sidebar__item">
+                    <a routerLink="/settings" class="sidebar__link" routerLinkActive="active">
+                        Settings</a></li>
+                <!-- <li class="sidebar__item">
+                    <a routerLink="/feeback" class="sidebar__link" routerLinkActive="active">
+                        Feedback</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/feeback" class="sidebar__link" routerLinkActive="active">
+                        Help</a></li> -->
+                <li class="sidebar__item sidebar__out"><a (click)="onSignOut()" class="sidebar__link btn btn__warn">Logout</a></li>
+            </ul>
+            <ul class="sidebar__list" *appShowAuthed="false">
+                <li class="sidebar__item">
+                    <a routerLink="/sign-in" class="sidebar__link" routerLinkActive="active">
+                        <button class="btn btn__primary">Sign In</button>
+                    </a>
+                </li>
+            </ul>
+            <ul class="sidebar__list" *appShowAuthed="false">
+                <li class="sidebar__item">
+                    <a routerLink="/settings" class="sidebar__link" routerLinkActive="active">
+                        Settings</a></li>
+                <!-- <li class="sidebar__item">
+                    <a routerLink="/feeback" class="sidebar__link" routerLinkActive="active">
+                        Feedback</a></li>
+                <li class="sidebar__item">
+                    <a routerLink="/feeback" class="sidebar__link" routerLinkActive="active">
+                        Help</a></li> -->
+            </ul>
+
+        </div>
+        <div class="sidebar__footer">
+
+        </div>
+    </div>
+</div>

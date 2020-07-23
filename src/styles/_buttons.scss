@@ -1,0 +1,137 @@
+.btn {
+  padding: 0px 12px;
+  border-radius: 2px;
+  box-shadow: var(--shadow-light);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  text-decoration: none;
+  border: none;
+  font-weight: unset;
+  font-family: var(--secondary-font);
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  background: transparent;
+  border: 1px solid;
+
+  &:hover {
+    .icon {
+      &__primary {
+        fill: #fff;
+      }
+    }
+  }
+
+  .icon {
+    fill: #fff;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    margin-right: 4px;
+
+    &__primary {
+      fill: var(--color-secondary);
+    }
+  }
+
+  &__primary {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary) !important;
+
+    &:hover {
+      background: var(--color-secondary);
+      color: #fff !important;
+    }
+  }
+
+  &__secondary {
+    border-color: var(--color-secondary);
+    background: var(--color-secondary);
+    color: #fff !important;
+
+    &:hover {
+      background: var(--color-secondary-light);
+    }
+  }
+
+  &__warn {
+    border-color: var(--color-warn);
+    color: var(--color-warn) !important;;
+    background: #fff;
+
+    &:hover {
+      background: var(--color-warn-light);
+    }
+  }
+
+  &:hover {
+    box-shadow: --shawdow-dark;
+  }
+
+  &__follow {
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
+
+    .icon {
+      fill: var(--color-secondary);
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      background: var(--color-secondary-light);
+      color: #fff !important;
+
+      .icon {
+        fill: #fff;
+      }
+    }
+
+    &.btn {
+
+      &__not--followed {
+
+      }
+
+      &__followed {
+        
+      }
+    }
+  }
+
+  &__like {
+    border-color: var(--color-secondary);
+    margin-top: 0;
+    margin-bottom: 0;
+    color: --color-secondary;
+
+    .icon {
+      fill: var(--color-secondary);
+    }
+
+    &.disabled {
+    }
+
+    &.btn {
+      &__liked {
+        background: var(--color-secondary);
+        color: #fff;
+
+        .icon {
+          fill: #fff;
+        }
+      }
+
+      &__not--liked {
+        background: transparent;
+      }
+    }
+  }
+
+  &__text {
+    font-family: var(--secondary-font);
+  }
+}

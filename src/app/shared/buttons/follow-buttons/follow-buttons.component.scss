@@ -1,0 +1,15 @@
+.follow {
+  &__content {
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__description {
+    padding: 12px 0px;
+  }
+}
+
+.disabled {
+  cursor: progress;
+}

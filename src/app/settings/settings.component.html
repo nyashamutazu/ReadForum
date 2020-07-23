@@ -1,0 +1,89 @@
+<div class="section">
+    <div class="container">
+        <div class="layout__container">
+            <div class="layout">
+                <h1 class="heading__primary">Edit Account</h1>
+                <app-list-errors [errors]="errors"></app-list-errors>
+
+                <form [formGroup]="settingsForm" (submit)="submitSettings()" class="form">
+                    <div class="form__controller">
+                        <label class="form__label">Image Url</label>
+                        <input type="text" class="form__input" placeholder="imageUrl" formControlName="profileImage"
+                            placeholder="Image Url">
+
+                        <!-- <button class="btn btn__primary" type="button" (click)="imagePicked.click()">Add Profile
+                            Picture</button>
+                        <input type="file" formControlName="imageFile" hidden class="form__input" #imagePicked
+                            (change)="onImagePicked($event)"> -->
+                    </div>
+                    <div class="form__controller">
+                        <label class="form__label">Username</label>
+                        <input type="text" class="form__input" placeholder="Username" formControlName="username">
+                    </div>
+                    <div class="form__controller">
+                        <label class="form__label">Email</label>
+
+                        <input type="email" class="form__input" placeholder="Email" formControlName="email">
+                    </div>
+                    <!-- <div class="form__controller">
+                        <input type="password" class="form__input" placeholder="New Password"
+                            formControlName="password">
+                    </div>
+                    <div class="form__controller">
+                        <input type="password" class="form__input" placeholder="Repeat New Password"
+                            formControlName="passwordRepeat">
+                    </div> -->
+                    <div class="form__controller">
+                        <label class="form__label">Profile Bio</label>
+
+                        <textarea class="form__textarea" formControlName="bio" placeholder="Short bio about you"
+                            rows="5"></textarea>
+                    </div>
+                    <div class="form__controller">
+                        <button class="btn btn__secondary" type="submit">Update Settings</button>
+                    </div>
+                </form>
+            </div>
+            <div class="layout">
+                <h1 class="heading__primary">Connect</h1>
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Connect To Facebook</h4>
+                    <p class="paragraph__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quibusdam
+                        voluptates distinctio, harum quam asperiores, labore facere quisquam consectetur iure culpa,
+                        dicta non similique vero laboriosam soluta. Molestiae, temporibus atque.</p>
+                </div>
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Connect To Twitter</h4>
+                    <p class="paragraph__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quibusdam
+                        voluptates distinctio, harum quam asperiores, labore facere quisquam consectetur iure culpa,
+                        dicta non similique vero laboriosam soluta. Molestiae, temporibus atque.</p>
+                </div>
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Connect To Google</h4>
+                    <p class="paragraph__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quibusdam
+                        voluptates distinctio, harum quam asperiores, labore facere quisquam consectetur iure culpa,
+                        dicta non similique vero laboriosam soluta. Molestiae, temporibus atque.</p>
+                </div>
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Connect To Intagram</h4>
+                    <p class="paragraph__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quibusdam
+                        voluptates distinctio, harum quam asperiores, labore facere quisquam consectetur iure culpa,
+                        dicta non similique vero laboriosam soluta. Molestiae, temporibus atque.</p>
+                </div>
+
+            </div>
+            <div class="layout">
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Deactivate Account</h4>
+
+                    <button class="btn btn__primary" (click)="onDeactivateAcount()">Deactivate Account</button>
+                </div>
+                <div class="layout__container">
+                    <h4 class="heading__tertiary">Sign Out</h4>
+
+                    <button class="btn btn__warn" (click)="onSignOut()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

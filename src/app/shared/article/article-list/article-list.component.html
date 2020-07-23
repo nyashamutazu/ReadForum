@@ -1,0 +1,21 @@
+<div class="article__list--container" *ngIf="!isLoading">
+    <app-article-preview *ngFor="let article of articles" [article]="article"></app-article-preview>
+    <div *ngIf="articles.length < 1">
+        <h1 style="text-align: center">You Currently Do Not Follow Anyone</h1>
+    </div>
+</div>
+
+<div class="article-preview" *ngIf="isLoading">
+    Loading articles...
+</div>
+
+<div class="article-preview" *ngIf="isLoading || articles.length < 1">
+    No articles. Maybe you can write one?
+</div>
+
+<!-- <nav [hidden]="loading || totalPages.length <= 1">
+    <ul class="pagination">
+
+    </ul>
+</nav>  -->
+

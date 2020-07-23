@@ -1,0 +1,16 @@
+footer {
+    background: var(--color-main);
+
+    .container {
+        color: #000;
+        text-align: center;
+
+        p, a {
+            color: #fff;
+            transition: all .3s;
+        }
+        a:hover {
+            color: var(--color-primary);
+        }
+    }
+}

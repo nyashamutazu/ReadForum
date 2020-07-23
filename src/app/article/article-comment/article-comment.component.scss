@@ -1,0 +1,77 @@
+.card {
+  &__comment {
+    margin: 10px auto 20px;
+    border: 1px solid;
+    border-color: var(--color-grey-border);
+    border-radius: 3px;
+    box-shadow: var(--shadow-light);
+    background: var(--color-grey-background);
+    overflow: hidden;
+  }
+
+  &__body {
+    padding: 20px;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--color-grey-border);
+
+  }
+
+  &__text {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  &__footer {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: all 0.3s;
+
+    .comment__author {
+      margin-right: 10px;
+      color: #000;
+      text-decoration: none;
+      transition: all 0.3s;
+
+      &:hover {
+        color: var(--color-primary);
+        text-decoration: underline;
+      }
+    }
+
+    &--end {
+      flex: 0 0 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    &--qoute {
+      font-size: 12px;
+      color: grey;
+    }
+
+    &--actions {
+    }
+
+    &:hover {
+      box-shadow: var(--shawdow-dark);
+      background: var(--color-grey-background-dark);
+    }
+  }
+
+  &__author {
+    font-size: 12px;
+    color: grey;
+  }
+
+  &__image {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+}

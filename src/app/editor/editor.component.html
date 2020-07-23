@@ -1,0 +1,48 @@
+<div class="section">
+    <div class="container">
+        <div class="editor__container">
+            <div class="editor">
+                <app-list-errors [errors]="errors"></app-list-errors>
+
+                <form [formGroup]="editorForm" class="form" (keydown.enter)="$event.preventDefault()" (submit)="submitArticle()">
+                    <div class="form__controller">
+                        <input type="text" formControlName="title" placeholder="Article Title" required
+                            class="form__input" [disabled]="isSubmitting">
+                    </div>
+                    <div class="form__controller">
+                        <input type="text" formControlName="description" required placeholder="Article Description"
+                            class="form__input" [disabled]="isSubmitting">
+                    </div>
+                    <div class="form__controller">
+                        <textarea formControlName="body" id="body" rows="10" required placeholder="Write your article"
+                            class="form__textarea" [disabled]="isSubmitting"></textarea>
+                    </div>
+                    <div class="form__controller form__controller--tags">
+                        <input formControlName="tag" class="form__input" type="text" [disabled]="isSubmitting"
+                            placeholder="Add tags" (keyup.enter)="addTag()">
+
+                        <div class="form__tags--container">
+                            <div class="form__tags" *ngFor="let tag of tagList; let i = index">
+                                <p class="form__tag">
+                                    {{ tag }}
+                                </p>
+                                <svg class="icon icon__close" (click)="removeTag(i)">
+                                    <use xlink:href="/assets/icons.svg#icon-clear"></use>
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form__controller">
+                        <button class="btn btn__primary" [disabled]="isSubmitting">
+                            {{mode}} Article
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- *ngFor="let tag of tags" -->

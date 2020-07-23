@@ -1,0 +1,50 @@
+.article {
+    &__meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        ng-content {
+            flex: 1;
+        }
+    }
+
+    &__body {
+        flex: 3;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-items: flex-start;
+    }
+
+    &__image {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+
+        &--link {
+
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-left: 8px;
+    }
+
+    &__author {
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: 900;
+        color: black;
+    }
+
+    &__date {
+        font-size: 10px;
+        color: grey;
+    }
+}

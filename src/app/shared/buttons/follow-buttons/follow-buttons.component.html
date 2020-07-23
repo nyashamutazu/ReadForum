@@ -1,0 +1,12 @@
+<div class="follow__content" *ngIf="!isUser">
+    <div class="follow__description">
+        <button class="btn btn__follow" [ngClass]="{ 'disabled': isSubmitting,
+            'btn__not--followed': !profile.following,
+            'btn__followed': profile.following }" (click)="onToggleFollowing()">
+            <svg class="icon">
+                <use xlink:href="/assets/icons.svg#icon-person_add"></use>
+            </svg>
+            <p class="btn__text">{{ profile.following ? 'Unfollow' : 'Follow'}}</p>
+        </button>
+    </div>
+</div>

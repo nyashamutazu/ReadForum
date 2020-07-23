@@ -1,0 +1,8 @@
+<button class="btn btn__like" [ngClass]="{    'disabled': isSubmitting,
+                'btn__not--liked': !article.liked,
+                'btn__liked': article.liked }" (click)="onToggleLiked()">
+    <svg class="icon">
+        <use xlink:href="/assets/icons.svg#icon-favorite"></use>
+    </svg>
+    <ng-content></ng-content>
+</button>
