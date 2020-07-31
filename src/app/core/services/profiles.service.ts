@@ -1,16 +1,30 @@
+import { ProfileListConfig } from './../models/profile-list-config.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Profile } from '../models';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfilesService {
+  constructor(private apiService: ApiService) {}
 
-  constructor(private apiService: ApiService) { }
+  query(config: ProfileListConfig): Observable<any> {
+    const params = {};
 
-  get(username: string): Observable<{message: string, profile: Profile}> {
+    Object.keys(config.filters).forEach(k => {
+      params[k] = config.filters[k];
+    });
+
+    return this.apiService.get(
+      `/profiles/${config.filters.username}/${config.type}`,
+      new HttpParams({ fromObject: params })
+    );
+  }
+
+  get(username: string): Observable<{ message: string; profile: Profile }> {
     return this.apiService.get(`/profiles/${username}`);
   }
 

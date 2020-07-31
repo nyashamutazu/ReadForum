@@ -115,7 +115,7 @@ export class ArticleComponent implements OnInit {
     return;
   }
 
-  onDeleteComment(comment: Comment) {
+  onDeleteComment(comment) {
     this.isLoading = true;
 
     this.commentsService.destroy(comment.id, this.article.slug).subscribe(

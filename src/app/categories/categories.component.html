@@ -1,1 +1,11 @@
-<p>categories works!</p>
+<div class="section">
+    <div class="container">
+        <h2 class="heading__secondary">Title</h2>
+        <div class="trend__container">
+            <a [routerLink]=""class="trend" *ngFor="let trend of trends">
+                <h4 class="trend__title">{{trend}}</h4>
+                <img src="https://source.unsplash.com/featured/?{{trend}}" alt="" class="trend__background">
+            </a>
+        </div>
+    </div>
+</div>

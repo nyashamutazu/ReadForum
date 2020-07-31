@@ -4,8 +4,6 @@
             <a [routerLink]="['/article', article.slug]" class="article__preview--link">
                 <h1 class="article__preview--title">{{ article.title }}</h1>
             </a>
-            <app-favourite-buttons *appShowAuthed="true" [article]="article" (toggle)="onToggleLiked($event)">
-            </app-favourite-buttons>
         </div>
         <a [routerLink]="['/article', article.slug]" class="article__preview--link">
             <div class="article__preview--body">
@@ -17,8 +15,65 @@
                 </ul>
             </div>
         </a>
+        <div class="article__preview--actions">
+            <app-favourite-buttons *appShowAuthed="true" [article]="article" (toggle)="onToggleLiked($event)">
+            </app-favourite-buttons>
+        </div>
         <div class="article__preview--footer">
             <app-article-meta [article]="article">
+                <div class="dropbox__holder">
+                    <app-on-click>
+                        <button button class="btn btn__settings">
+                            <svg class="icon icon__vert">
+                                <use xlink:href="/assets/icons.svg#icon-more_vert"></use>
+                            </svg>
+                        </button>
+                        <div dropdown class="dropbox">
+                            <div class="dropbox__container">
+                                <ul *ngIf="!isUser" class="dropbox__list">
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Delete</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Archive</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Edit</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Share To</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Share</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Add To List</a>
+                                    </li>
+                                </ul>
+                                <ul *ngIf="isUser" class="dropbox__list">
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Restrict</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Block</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Report</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Follow</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Share Account</a>
+                                    </li>
+                                    <li class="dropdox__item">
+                                        <a routerLink="" class="dropbox__link">Add To List</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </app-on-click>
+                </div>
             </app-article-meta>
         </div>
     </div>

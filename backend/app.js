@@ -8,7 +8,6 @@ const environment = require("./environment/environment-prod");
 
 const app = express();
 
-
 const production = true || process.env.NODE_ENV === "production";
 
 app.use(bodyParser.json());
@@ -17,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/api", indexRoutes);
+
+app.use(express.static(__dirname + "/backend/ReadForum"))
 
 mongoose
   .connect(environment.DATABASE_URL)
@@ -31,5 +32,9 @@ mongoose
       console.log(err)
     }
   });
+
+  app.get("/*", (req, res, next) => {
+    res.sendFile(path.join(__dirname + "/backend/ReadForum/index.html"))
+  })
 
 module.exports = app;

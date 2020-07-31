@@ -1,25 +1,49 @@
 <section class="section">
-    <div class="banner" *appShowAuthed="false">
-        <div class="container" style="padding-top: 20px;">
+    <div class="container" style="padding-top: 20px;">
+        <div class="banner" *appShowAuthed="false">
             <div class="banner__body">
                 <h1 class="banner__heading">Sign Up Now To Share</h1>
                 <p class="banner__text">Join our growing community.</p>
                 <!-- <a routerLink="sign-up" class="btn btn__secondary">Sign Up</a> -->
-                <a routerLink="sign-up" class="btn btn__secondary">Sign Up</a>
+                <div class="banner__actions">
+                    <a routerLink="sign-in" class="btn btn__primary">Sign In</a>
+                    <a routerLink="sign-up" class="btn btn__secondary">Sign Up</a>
+                </div>
             </div>
             <div class="banner__home">
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" style="padding-top: 20px;">
+        <div class="category__container">
+            <a routerLink="/editor" class="category category__main">
+                <svg class="icon">
+                    <use xlink:href="/assets/icons.svg#icon-pencil"></use>
+                </svg>
+                <h3 class="heading__tertiary">Write Article</h3>
+            </a>
+            <a routerLink="/trending" class="category">
+                <svg class="icon">
+                    <use xlink:href="/assets/icons.svg#icon-trending_up"></use>
+                </svg>
+                <h3 class="heading__tertiary">Trending</h3>
+            </a>
+            <a routerLink="/results" class="category">
+                <svg class="icon">
+                    <use xlink:href="/assets/icons.svg#icon-search"></use>
+                </svg>
+                <h3 class="heading__tertiary">Search</h3>
+            </a>
+        </div>
         <div class="feed__container">
             <div class="feed__column--1">
                 <div class="feed">
                     <div class="feed__nav">
                         <ul class="nav__list">
-                            <li class="nav__item" *appShowAuthed="true"><a [ngClass]="{'active': listConfig.type === 'feed'}"
-                                    (click)="setViewTo('feed')" class="nav__link">{{ postsTitle }}</a></li>
-                            <li class="nav__item" ><a
+                            <li class="nav__item" *appShowAuthed="true"><a
+                                    [ngClass]="{'active': listConfig.type === 'feed'}" (click)="setViewTo('feed')"
+                                    class="nav__link">{{ postsTitle }}</a></li>
+                            <li class="nav__item"><a
                                     [ngClass]="{'active': listConfig.type === 'all' && !listConfig.filters.tag}"
                                     (click)="setViewTo('')" class="nav__link">Global</a></li>
                             <!-- <li class="nav__item"><a class="nav__link  nav__link--active"> {{ listConfig.filters.tag }}</a></li> -->

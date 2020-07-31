@@ -2,7 +2,7 @@
   &__bar {
     box-shadow: 0px 3px 9px -2px rgba(0, 0, 0, 0.08);
     background: #fff;
-    height: 70px;
+    // height: 70px;
     // border-bottom: 1px solid rgb(219, 219, 219);
 
     .container__nav {
@@ -20,17 +20,56 @@
 
   &__search {
     flex: 1;
-    min-width: 325px;
+    cursor: default !important;
 
     &--form {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-start;
 
       &:hover {
         button,
         input {
           background: rgb(247, 247, 247);
         }
+      }
+    }
+
+    &--controller {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2px 6px;
+
+      &-search {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+    }
+
+    &--small-title {
+      font-size: 8px;
+      color: grey;
+      padding: 0;
+      margin: 0;
+    }
+
+    &--label {
+      font-size: 11px;
+      padding: 3px;
+      margin: 0;
+      margin-right: 2px;
+      border-radius: 2px;
+      background: var(--color-grey-background-dark);
+      box-shadow: var(--shadow-light);
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background: var(--color-quad);
       }
     }
 
@@ -72,6 +111,14 @@
       }
     }
 
+    &--radio {
+      display: none;
+    }
+
+    &--radio[type="radio"]:checked + label {
+      background: var(--color-quad);
+    }
+
     &--icon {
       height: 22px;
       width: 22px;
@@ -99,7 +146,7 @@
 
         .btn {
           padding-left: 20px !important;
-          padding-right: 20px !important; 
+          padding-right: 20px !important;
         }
       }
     }

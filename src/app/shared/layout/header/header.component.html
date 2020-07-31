@@ -4,17 +4,37 @@
             <img src="https://i.ya-webdesign.com/images/green-logo-png-13.png" alt="" class="nav__logo--img">
         </a>
 
-        <ul class="nav__list nav__authentication" *appShowAuthed="false">
+        <ul class="nav__list">
             <li class="nav__item nav__search">
-                <form class="nav__search--form" (submit)="searchForm">
-                    <button class="nav__search--btn" type="submit">
-                        <svg class="nav__search--icon">
-                            <use xlink:href="/assets/icons.svg#icon-search"></use>
-                        </svg>
-                    </button>
-                    <input type="search" placeholder="Search articles and more..." required class="nav__search--input">
+                <form class="nav__search--form" [formGroup]="searchForm" (submit)="search()">
+                    <div class="nav__search--controller nav__search--controller-search">
+                        <h5 class="nav__search--small-title">Search By</h5>
+                        <div class="nav__search--controller-content">
+                            <input type="radio" formControlName="radio" value="account" id="account"
+                                class="nav__search--radio">
+                            <label for="account" class="nav__search--label">Account</label>
+                            <input type="radio" formControlName="radio" value="article" id="article"
+                                class="nav__search--radio">
+                            <label for="article" class="nav__search--label">Article</label>
+                            <input type="radio" formControlName="radio" value="trending" id="trending"
+                                class="nav__search--radio">
+                            <label for="trending" class="nav__search--label">Trending</label>
+                        </div>
+                    </div>
+                    <div class="nav__search--controller">
+                        <button class="nav__search--btn" type="submit">
+                            <svg class="nav__search--icon">
+                                <use xlink:href="/assets/icons.svg#icon-search"></use>
+                            </svg>
+                        </button>
+                        <input type="search" formControlName="search" placeholder="Search articles and more..." required
+                            class="nav__search--input">
+                    </div>
                 </form>
             </li>
+        </ul>
+
+        <ul class="nav__list nav__authentication" *appShowAuthed="false">
             <li class="nav__item"><a routerLink="/sign-in" class="nav__link btn btn__primary"
                     routerLinkActive="active">Sign In</a></li>
             <li class="nav__item"><a routerLink="/sign-up" class="nav__link btn btn__secondary"
@@ -22,16 +42,6 @@
         </ul>
 
         <ul *appShowAuthed="true" class="nav__list">
-            <li class="nav__item nav__search">
-                <form class="nav__search--form" (submit)="searchForm">
-                    <button class="nav__search--btn" type="submit">
-                        <svg class="nav__search--icon">
-                            <use xlink:href="/assets/icons.svg#icon-search"></use>
-                        </svg>
-                    </button>
-                    <input type="search" placeholder="Search articles and more..." required class="nav__search--input">
-                </form>
-            </li>
             <li class="nav__item nav__item--dropdown">
                 <a [routerLink]="['/profile', user.username]" class="nav__link">
                     <img [src]="user.profileImage" class="nav__profile--image" alt=""></a>
@@ -46,11 +56,11 @@
                     <ul class="nav__dropdown--list">
                         <li class="nav__dropdown--item"><a routerLink="/editor" class="nav__dropdown--link">New
                                 Article</a></li>
-                        <li class="nav__dropdown--item"><a [routerLink]="['/profile', user.username, 'articles']"
+                        <li class="nav__dropdown--item"><a [routerLink]="['/profile', user.username]"
                                 class="nav__dropdown--link">My Articles</a></li>
                         <li class="nav__dropdown--item"><a [routerLink]="['/profile', user.username, 'liked']"
                                 class="nav__dropdown--link">Liked Articles</a></li>
-                        <li class="nav__dropdown--item"><a [routerLink]="['/profile', user.username, 'read-later']"
+                        <li class="nav__dropdown--item"><a [routerLink]="['/profile', user.username, 'readLater']"
                                 class="nav__dropdown--link">Read Later</a></li>
                     </ul>
                     <ul class="nav__dropdown--list">

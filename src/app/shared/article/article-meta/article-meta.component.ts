@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/core/services/user.service';
 import { Article } from 'src/app/core';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -8,13 +9,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ArticleMetaComponent implements OnInit {
   @Input() article: Article;
-  toggler: boolean;
+  isAuthed: boolean;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.isAuthenticatedListner.subscribe(isAuthed => {
+      this.isAuthed = isAuthed;
+    });
   }
-
-  onToggleFollowing(event: boolean) {}
 
 }

@@ -20,9 +20,14 @@ export class FavouriteButtonsComponent implements OnInit {
   @Input() article: Article;
   @Output() toggle = new EventEmitter<boolean>();
   isSubmitting = false;
+  isUser = false;
   userSub: Subscription;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.currentUserListner.subscribe(user => {
+      this.isUser = (user.username !== this.article.author.username);
+    });
+  }
 
   onToggleLiked() {
     this.isSubmitting = true;
@@ -39,7 +44,6 @@ export class FavouriteButtonsComponent implements OnInit {
             err => {
               this.article.liked = true;
               this.isSubmitting = false;
-
             }
           );
         } else {

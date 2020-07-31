@@ -62,7 +62,7 @@ class ArticleClass {
   updateLikedCount() {
     const article = this;
 
-    return User.count({ likes: { $in: [article._id] } }).then(count => {
+    return User.count({ liked: { $in: [article._id] } }).then(count => {
       article.likeCount = count;
 
       return article.save();

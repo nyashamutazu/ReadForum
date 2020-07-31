@@ -1,3 +1,4 @@
+
 import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
@@ -10,15 +11,13 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { FooterComponent, HeaderComponent, SidebarComponent } from './shared/layout';
 import { NotFoundModule } from './not-found/not-found.module';
-import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    SidebarComponent,
-    CategoriesComponent
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

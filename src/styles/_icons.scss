@@ -1,4 +1,49 @@
 .icon {
-    width: 25px;
-    height: 25px;
+  width: 18px;
+  height: 18px;
+
+  &__verified {
+    fill: rgb(60, 145, 255);
+    margin-left: 5px;
+    height: 12px;
+    width: 12px;
+  }
+
+  &__vert {
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  &__social {
+    padding: 5px 60px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    border-radius: 2px;
+    fill: #fff;
+    box-shadow: var(--shadow-dark);
+  }
+
+  &__google {
+    background:#DB4437;
+  }
+
+  &__twitter {
+    background: #00acee;
+  }
+
+  &__instagram {
+    background: #f09433; 
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+  }
+
+  &__facebook {
+    background: #3b5998;
+  }
 }

@@ -9,7 +9,7 @@ import {
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,11 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-      return this.userService.isAuthenticatedListner.pipe(take(1));
+    return this.userService.isAuthenticatedListner.pipe(take(1), map(isAuthed => {
+      if (!isAuthed) {
+        this.router.navigate(['sign-in']);
+      }
+      return isAuthed;
+    }));
   }
 }

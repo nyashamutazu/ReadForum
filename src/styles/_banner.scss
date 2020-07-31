@@ -1,18 +1,14 @@
 .banner {
+  border-radius: 5px;
   height: 320px;
-  border-bottom: 1px solid;
-  border-bottom-color: var(--color-grey-border);
-  // box-shadow: var(--shadow-dark);
+  box-shadow: var(--shadow-light);
   flex-direction: row;
-  overflow: hidden;
   margin-bottom: 30px;
   background: var(--color-background-light);
+  display: flex;
+  align-items: center;
+  position: relative;
 
-  .container {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
 
   &__body {
     flex: 0 0 300px;
@@ -29,8 +25,8 @@
 
   &__user {
     height: unset;
-    padding: 10px 0;
-    background: var(--color-grey-background);
+    padding: 50px 0;
+    background: var(--color-grey-background-dark);
 
     &--body {
       flex: 1;
@@ -44,6 +40,16 @@
     justify-content: flex-end;
     height: 100%;
     margin-bottom: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .btn {
+      min-width: 120px;
+    }
   }
 
   &__heading {

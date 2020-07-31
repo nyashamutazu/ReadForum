@@ -1,0 +1,7 @@
+<div *ngIf="isLoading">
+    <h5>Is Loading</h5>
+</div>
+<div *ngIf="!isLoading">
+    <app-article-list [limit]="10" [listConfig]="listConfig"></app-article-list>
+</div>
+

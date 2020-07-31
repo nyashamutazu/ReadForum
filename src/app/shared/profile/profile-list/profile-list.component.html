@@ -1,0 +1,11 @@
+<div class="article__list--container" *ngIf="!isLoading">
+    <app-profile-preview *ngFor="let profile of profiles" [profile]="profile"></app-profile-preview>
+</div>
+
+<div class="profile-preview" *ngIf="isLoading">
+    Loading users...
+</div>
+
+<div class="profile-preview" *ngIf="isLoading || profiles.length < 1">
+    No users available.
+</div>

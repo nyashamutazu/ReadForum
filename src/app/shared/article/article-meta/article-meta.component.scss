@@ -3,10 +3,14 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        width: 100%;
+    }
 
-        ng-content {
-            flex: 1;
-        }
+    &__content {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+        margin-left: auto;
     }
 
     &__body {
@@ -41,6 +45,8 @@
         text-decoration: none;
         font-weight: 900;
         color: black;
+        display: flex;
+        align-items: center;
     }
 
     &__date {

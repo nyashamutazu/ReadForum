@@ -48,6 +48,7 @@ export class UserService {
     if (inFuture > 0) {
       this.getUser().subscribe(
         response => {
+
           this.setAuth(response.data.user, response.data.expiresIn);
           this.setTimer(inFuture / 1000);
           return;
@@ -63,6 +64,7 @@ export class UserService {
 
     return this.apiService.post('/user' + authParam, credentials).pipe(
       map(response => {
+        console.log(response);
         this.setAuth(response.data.user, response.data.expiresIn);
         return response.data.user;
       })

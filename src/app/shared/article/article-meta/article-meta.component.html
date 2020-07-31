@@ -7,6 +7,9 @@
     <div class="article__info">
       <a class="article__author" [routerLink]="['/profile', article.author.username]">
         {{ article.author.username }}
+        <svg class="icon icon__verified">
+            <use xlink:href="/assets/icons.svg#icon-check-circle"></use>
+        </svg>
       </a>
       <!-- <app-follow-buttons [toggler]="toggler" [profile]="article.author" (toggle)="onToggleFollowing($event)"
         (mouseenter)="toggler=true" (mouseleave)="toggler=false">
@@ -17,5 +20,7 @@
       </span>
     </div>
   </div>
-  <ng-content></ng-content>
+  <div class="article__content" *ngIf="isAuthed">
+      <ng-content></ng-content>
+  </div>
 </div>

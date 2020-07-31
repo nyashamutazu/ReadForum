@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Article = require("../models/Article");
 
 exports.getUserProfile = (req, res, next, username) => {
   User.findOne({ username: username })
@@ -9,9 +10,17 @@ exports.getUserProfile = (req, res, next, username) => {
         });
       }
 
-      req.profile = user;
+      Article.count({ author: user._id })
+        .then(amount => {
+          user.articleCount = Number(amount);
 
-      return next();
+          return user.save();
+        })
+        .then(user => {
+          req.profile = user;
+
+          return next();
+        });
     })
     .catch(err => {
       res.status(500).json({
@@ -20,10 +29,54 @@ exports.getUserProfile = (req, res, next, username) => {
     });
 };
 
+exports.profileSearch = (req, res, next) => {
+  console.log("About to search this btch")
+  let limit = 20;
+  let offset = 0;
+
+  if (typeof req.query.limit !== "undefined" || req.query.limit !== null) {
+    limit = req.query.limit;
+  }
+
+  if (typeof req.query.offset !== "undefined" || req.query.offset !== null) {
+    offset = req.query.offset;
+  }
+
+  const regex = new RegExp(req.query.username, "i");
+
+  Promise.all([
+    User.find({ username: regex })
+      .limit(Number(limit))
+      .skip(Number(offset))
+      .sort({ created_at: "descending" })
+      .populate("author")
+      .exec(),
+    req.required ? User.findById(req.required.userId) : null
+  ])
+    .then(results => {
+      const profiles = results[0];
+      const user = results[1];
+
+      console.log(req);
+
+      return res.status(200).json({
+        message: "Found User And Followed",
+        profiles: profiles.map(profile => {
+          return profile.toProfileJSONUser(user);
+        })
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to get feed for user"
+      });
+    });
+};
+
 exports.getUser = (req, res, next) => {
   if (typeof req.required === "undefined" || req.required === null) {
     return res.status(200).json({
-      message: "Failed To Find User",
+      message: "User Not Logged In",
       profile: req.profile.toProfileJSONUser(false)
     });
   } else {
@@ -40,8 +93,57 @@ exports.getUser = (req, res, next) => {
           profile: req.profile.toProfileJSONUser(user)
         });
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log("Failed Big Time");
+      });
   }
+};
+
+exports.usersFollowQuery = (req, res, next) => {
+  let limit = 20;
+  let offset = 0;
+  let requester;
+
+  if (typeof req.query.limit !== "undefined") {
+    limit = req.query.limit;
+  }
+
+
+  if (typeof req.query.offset !== "undefined") {
+    offset = req.query.offset;
+  }
+
+  for (let i in req.query) {
+    if (i.toString() !== "limit" && i.toString() !== "offset") {
+      requester = i;
+    }
+  }
+
+  Promise.all([
+    User.findById({ $in: req.profile[`${requester}`]})
+      .limit(Number(limit))
+      .skip(Number(offset))
+      .populate("_id")
+      .exec(),
+    req.required ? User.findById(req.required.userId) : null
+  ])
+    .then(results => {
+      const profiles = results[0] || [];
+      const user = results[1];
+
+      return res.status(200).json({
+        message: "Found profiles",
+        profiles: profiles.map(profile => {
+          return profile.toProfileJSONUser(user);
+        }) 
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        message: "Failed to get profiles"
+      });
+    });
 };
 
 exports.followUser = (req, res, next) => {
@@ -64,21 +166,24 @@ exports.followUser = (req, res, next) => {
         });
       }
 
-      return user.follow(profileId).then(() => {
-        return profile
-          .followed(user._id)
-          .then(() => {
-            return res.status(202).json({
-              message: "Found User And Followed",
-              profile: req.profile.toProfileJSONUser(user)
+      return user
+        .follow(profileId)
+        .then(() => {
+          return profile
+            .followed(user._id)
+            .then(() => {
+              return res.status(202).json({
+                message: "Found User And Followed",
+                profile: req.profile.toProfileJSONUser(user)
+              });
+            })
+            .catch(err => {
+              console.log("follow err 1", err);
             });
-          })
-          .catch(err => {
-            console.log("follow err 1", err);
-          });
-      }).catch(err => {
-        console.log("follow err 2", err);
-      });
+        })
+        .catch(err => {
+          console.log("follow err 2", err);
+        });
     })
     .catch(err => {
       console.log(err);
@@ -108,18 +213,24 @@ exports.unfollowUser = (req, res, next) => {
         });
       }
 
-      return user.unfollow(profileId).then(() => {
-        return profile.unfollowed(user._id).then(() => {
-          return res.status(202).json({
-            message: "Found User And Followed",
-            profile: req.profile.toProfileJSONUser(user)
-          });
-        }).catch(err => {
-          console.log("unfollow err 1", err);
-        });;
-      }).catch(err => {
-        console.log("unfollow err 2", err);
-      });;
+      return user
+        .unfollow(profileId)
+        .then(() => {
+          return profile
+            .unfollowed(user._id)
+            .then(() => {
+              return res.status(202).json({
+                message: "Found User And Followed",
+                profile: req.profile.toProfileJSONUser(user)
+              });
+            })
+            .catch(err => {
+              console.log("unfollow err 1", err);
+            });
+        })
+        .catch(err => {
+          console.log("unfollow err 2", err);
+        });
     })
     .catch(err => {
       res.status(500).json({

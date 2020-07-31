@@ -1,3 +1,5 @@
+import { TagsService } from './../core/services/tags.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private tagsService: TagsService) { }
+  isLoading = false;
+  trends: string[];
 
   ngOnInit(): void {
+    this.tagsService.getAll().subscribe(tags => {
+      this.trends = tags;
+    });
   }
 
 }

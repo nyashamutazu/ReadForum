@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -11,26 +12,16 @@ import { catchError } from 'rxjs/operators';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  get(path: string, params?: HttpParams = new HttpParams()): Observable<any> {
-    if (params) {
-      return this.http
+  get(path: string, params?: HttpParams): Observable<any> {
+    return this.http
       .get<{ message: string; responeData: any }>(
         `${environment.api_url}${path}`,
-        {params}
+        { params }
       )
       .pipe(catchError(this.formatErrors));
-    } else {
-      return this.http
-      .get<{ message: string; responeData: any }>(
-        `${environment.api_url}${path}`
-      )
-      .pipe(catchError(this.formatErrors));
-    }
-
   }
 
   put(path: string, data: any): Observable<any> {
-
     return this.http
       .put<{ message: string; responeData: any }>(
         `${environment.api_url}${path}`,
@@ -40,7 +31,6 @@ export class ApiService {
   }
 
   post(path: string, data?: any): Observable<any> {
-    console.log('In API', path, data);
     return this.http
       .post<{ message: string; responseData: any }>(
         `${environment.api_url}${path}`,

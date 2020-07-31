@@ -7,8 +7,8 @@ import {
   Input,
   OnDestroy
 } from '@angular/core';
+import { UserService } from 'src/app/core';
 
-import { UserService } from '../core';
 
 @Directive({
   selector: '[appShowAuthed]'

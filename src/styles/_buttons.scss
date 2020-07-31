@@ -25,10 +25,14 @@
     }
   }
 
+  &:first-of-type {
+    margin-left: 0;
+  }
+
   .icon {
     fill: #fff;
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     margin: 0;
     padding: 0;
     margin-right: 4px;
@@ -60,7 +64,7 @@
 
   &__warn {
     border-color: var(--color-warn);
-    color: var(--color-warn) !important;;
+    color: var(--color-warn) !important;
     background: #fff;
 
     &:hover {
@@ -91,25 +95,65 @@
     }
 
     &.btn {
-
       &__not--followed {
-
       }
 
       &__followed {
-        
       }
     }
   }
 
-  &__like {
-    border-color: var(--color-secondary);
-    margin-top: 0;
-    margin-bottom: 0;
-    color: --color-secondary;
+  &__settings {
+    border-color: var(--color-grey-light);
+    padding: 9px 8px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-grey-background);
+    box-shadow: var(--shadow-light);
+    transition: all .3s;
+
+    &:hover {
+      background: var(--color-grey-background-dark);
+      box-shadow: var(--shadow-dark);
+      border-color: var(--color-grey-border);
+      
+      .icon {
+        fill: grey;
+      }
+    }
 
     .icon {
-      fill: var(--color-secondary);
+      fill: grey;
+      padding: 0;
+      margin: 0;
+      transition: all .3s;
+    }
+  }
+
+  &__like {
+    border-color: var(--color-grey-light);
+    box-shadow: var(--shadow-light);
+    margin: 0;
+    color: var(--color-secondary);
+    display: flex;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      .icon {
+        fill: var(--color-secondary);
+      }
+    }
+
+    .icon {
+      fill: grey;
+      padding: 0;
+      margin: 0;
     }
 
     &.disabled {
@@ -117,11 +161,12 @@
 
     &.btn {
       &__liked {
-        background: var(--color-secondary);
+        border-color: var(--color-secondary);
         color: #fff;
+        box-shadow: var(--shadow-light);
 
         .icon {
-          fill: #fff;
+          fill: var(--color-secondary);
         }
       }
 

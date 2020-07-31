@@ -1,6 +1,7 @@
 
+
 import { Component, OnInit, Input } from '@angular/core';
-import { Article } from 'src/app/core';
+import { Article, UserService } from 'src/app/core';
 
 @Component({
   selector: 'app-article-preview',
@@ -9,10 +10,16 @@ import { Article } from 'src/app/core';
 })
 export class ArticlePreviewComponent implements OnInit {
   @Input() article: Article;
+  isUser = false;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.currentUserListner.subscribe(user => {
+      if (user && user.username !== this.article.author.username) {
+        this.isUser = (user.username !== this.article.author.username);
+      }
+    });
   }
 
   onToggleLiked(liked: boolean) {

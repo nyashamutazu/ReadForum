@@ -1,11 +1,12 @@
-import { logging } from 'protractor';
+import { ProfilesService } from './../core/services/profiles.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 import { Errors } from './../core/models/errors.model';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { User } from './../core/models/user.model';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { ProfilesService, Profile } from '../core';
+import { Component, OnInit } from '@angular/core';
+import { Profile } from '../core';
+import { concatMap, tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -15,9 +16,8 @@ import { ProfilesService, Profile } from '../core';
 export class ProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private profileService: ProfilesService,
-    private userService: UserService
+    private userService: UserService,
+    private profileService: ProfilesService
   ) {}
 
   profile: Profile;
@@ -30,22 +30,16 @@ export class ProfileComponent implements OnInit {
   errors: Errors = { error: {} };
   isLoading = true;
 
-  showDropBox1 = false;
-  showDropBox2 = false;
-  showDropBox3 = false;
-
   ngOnInit(): void {
     this.isLoading = true;
-    console.log('Changing profile');
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      console.log("cHANGED")
-      this.username = paramMap.get('username');
-      this.profileService.get(this.username).subscribe(data => {
-        this.userService.currentUserListner.subscribe(user => {
 
-          this.profile = data.profile;
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+
+      this.profileService.get(paramMap.get('username')).subscribe(response => {
+        this.userService.currentUserListner.subscribe(user => {
+          this.profile = response.profile;
+
           this.user = user;
-          this.isLoading = false;
 
           if (user) {
             this.isAuthed = true;
@@ -54,7 +48,7 @@ export class ProfileComponent implements OnInit {
           if (user && this.user.username === this.profile.username) {
             this.isUser = true;
           }
-
+          this.isLoading = false;
         });
       });
     });
@@ -62,21 +56,31 @@ export class ProfileComponent implements OnInit {
 
   onToggleFollowing(event: Event) {}
 
-  onToggle(variable: number) {
-    switch (variable) {
-      case 1:
-        this.showDropBox1 = this.showDropBox1 === true ? false : true;
-        break;
-      case 2:
-        this.showDropBox2 = this.showDropBox2 === true ? false : true;
-        break;
-      case 3:
-        this.showDropBox3 = this.showDropBox3 === true ? false : true;
-        break;
-      default:
-        this.showDropBox1 = false;
-        this.showDropBox2 = false;
-        this.showDropBox3 = false;
-    }
+  onSignOut() {
+
+  }
+
+  onRestrictAccount(){
+
+  }
+
+  onBlockAccount() {
+
+  }
+
+  onReportAccount() {
+
+  }
+
+  onHideAccount() {
+
+  }
+
+  onFollowAccount() {
+
+  }
+
+  onShareAccount() {
+
   }
 }

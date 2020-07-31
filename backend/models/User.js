@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const unqiueValidator = require("mongoose-unique-validator");
+const Article = require('./Article');
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-let UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
@@ -37,6 +38,10 @@ let UserSchema = mongoose.Schema({
     type: String,
     default: ""
   },
+  articleCount: {
+    type: Number,
+    default: 0
+  },
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -68,6 +73,12 @@ let UserSchema = mongoose.Schema({
     }
   ],
   readLater: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Article"
+    }
+  ],
+  archived: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Article"
@@ -108,14 +119,32 @@ class UserClass {
     );
   };
 
+  // updateArticleCount() {
+  //   console.log("In Updated Count");
+  //   const user = this;
+  //   console.log('User id', user._id);
+
+  //   return Article.count({author: user._id}).then(count => {
+  //     console.log('Complete');
+  //     user.articleCount = Number(count);
+  //     return user.save();
+  //   }).catch(err => {
+  //     return console.log('Errrr \n ', err)
+      
+  //   })
+  // }
+
   toAuthJSON() {
     return {
       username: this.username,
       email: this.email,
       token: this.createJWT(),
       bio: this.bio,
-      externalLink: this.externalLink,
-      profileImage: this.profileImage
+      externalLink: this.externalLink || null,
+      profileImage: this.profileImage,
+      articleCount: this.articleCount,
+      followers: this.followers.length,
+      followings: this.following.length
     };
   };
 
@@ -125,9 +154,12 @@ class UserClass {
       email: this.email,
       token: this.createJWT(),
       bio: this.bio,
-      externalLink: this.externalLink,
+      externalLink: this.externalLink || null,
       profileImage: this.profileImage ||
       "https://taurangaelim.nz/wp-content/uploads/2019/05/placeholder-face-big.png",
+      articleCount: this.articleCount,
+      followers: this.followers.length,
+      followings: this.following.length
     };
   };
 
@@ -135,11 +167,14 @@ class UserClass {
     return {
       username: this.username,
       bio: this.bio,
-      externalLink: this.externalLink,
+      externalLink: this.externalLink || null,
       profileImage:
         this.profileImage ||
         "https://taurangaelim.nz/wp-content/uploads/2019/05/placeholder-face-big.png",
-      following: user ? user.isFollowing(this.id) : false
+      following: user ? user.isFollowing(this.id) : false,
+      articleCount: this.articleCount,
+      followers: this.followers.length,
+      followings: this.following.length
     };
   };
 

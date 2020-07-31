@@ -37,10 +37,15 @@ exports.postArticle = (req, res, next) => {
       article
         .save()
         .then(() => {
-          res.status(200).json({
-            message: "Successfully created Article",
-            article: article.toJSONUser(user)
-          });
+          user
+            .updateArticleCount()
+            .then(done => {
+              res.status(200).json({
+                message: "Successfully created Article",
+                article: article.toJSONUser(done)
+              });
+            })
+            .catch(err => console.log("Failed to update count", err));
         })
         .catch(err => console.log(err));
     })
@@ -55,13 +60,13 @@ exports.getRecentArticles = (req, res, next) => {
   let query = {};
   let limit = 20;
   let offset = 0;
+  let requester;
 
   if (typeof req.query.limit !== "undefined") {
     limit = req.query.limit;
   }
 
   if (typeof req.query.offset !== "undefined") {
-
     offset = req.query.offset;
   }
 
@@ -69,24 +74,33 @@ exports.getRecentArticles = (req, res, next) => {
     query.tagList = { $in: [req.query.tag] };
   }
 
-  // console.log(req)
+  if (typeof req.query.tag !== "undefined") {
+    const regex = new RegExp(req.query.tag, "i");
+    query.tagList = { $in: [regex] };
+  }
+
+  for (let i in req.query) {
+    if (i.toString() !== "limit" && i.toString() !== "offset") {
+      requester = i;
+    }
+  }
 
   Promise.all([
     req.query.author ? User.findOne({ username: req.query.author }) : null,
-    req.query.liked ? User.findOne({ username: req.query.liked }) : null
+    requester ? User.findOne({ username: req.query[`${requester}`] }) : null
   ])
     .then(results => {
       const author = results[0];
-      const liker = results[1];
+      const response = results[1];
 
       if (author) {
         query.author = author._id;
-      }
-
-      if (liker) {
-        query._id = { $in: liker.liked };
-      } else if (req.query.liked) {
-        query._id = { $in: [] };
+      } else {
+        if (response) {
+          query._id = { $in: response[`${requester}`] };
+        } else if (req.query[`${requester}`]) {
+          // query._id = { $in: [] };
+        }
       }
 
       return Promise.all([
@@ -120,7 +134,6 @@ exports.getRecentArticles = (req, res, next) => {
 };
 
 exports.getFeedArticles = (req, res, next) => {
-
   authenticatedRequest(req);
 
   var limit = 20;
@@ -237,12 +250,9 @@ exports.getLikedArticles = (req, res, next) => {
     });
 };
 
-exports.getReadLaterArticles = (req, res, next) => {
-};
+exports.getReadLaterArticles = (req, res, next) => {};
 
-exports.userArticles = (req, res, next) => {
-
-}
+exports.userArticles = (req, res, next) => {};
 
 exports.getArticle = (req, res, next) => {
   return Promise.all([
@@ -266,6 +276,86 @@ exports.getArticle = (req, res, next) => {
     })
     .catch(err => {
       console.log("Error", err);
+    });
+};
+
+exports.articleSearch = (req, res, next) => {
+  let limit = 20;
+  let offset = 0;
+
+  if (typeof req.query.limit !== "undefined" || req.query.limit !== null) {
+    limit = req.query.limit;
+  }
+
+  if (typeof req.query.offset !== "undefined" || req.query.offset !== null) {
+    offset = req.query.offset;
+  }
+
+  const regex = new RegExp(req.query.title, "i");
+
+  Promise.all([
+    Article.find({
+      $or: [{ title: regex }, { description: regex }, { body: regex }]
+    })
+      .limit(Number(limit))
+      .skip(Number(offset))
+      .sort({ created_at: "descending" })
+      .populate("author")
+      .exec(),
+    req.required ? User.findById(req.required.userId) : null
+  ])
+    .then(results => {
+      const articles = results[0];
+      const user = results[1];
+
+      return res.status(200).json({
+        message: "Found articles",
+        articles: articles.map(article => {
+          return article.toJSONUser(user);
+        })
+      });
+    })
+    .catch(err => {
+      console(err);
+      res.status(500).json({
+        message: "Failed to get feed for user"
+      });
+    });
+};
+
+exports.trendingSearch = (req, res, next) => {};
+
+exports.likeArticle = (req, res, next) => {
+  const articleId = req.article._id;
+
+  User.findById(req.required.userId)
+    .then(user => {
+      if (typeof user === "undefined" || user === null) {
+        res.status(401).json({
+          message: "Failed To Find Your User To Like Article"
+        });
+      }
+
+      return user
+        .like(articleId)
+        .then(() => {
+          return req.article.updateLikedCount().then(article => {
+            return res.status(202).json({
+              article: article.toJSONUser(user),
+              message: "Successfully Liked article"
+            });
+          });
+        })
+        .catch(err => {
+          res.status(403).json({
+            message: "Failed To Like Article"
+          });
+        });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed To Like Article"
+      });
     });
 };
 
@@ -305,36 +395,39 @@ exports.putArticle = (req, res, next) => {
     });
 };
 
-exports.likeArticle = (req, res, next) => {
-  const articleId = req.article._id;
-
+exports.deleteArticle = (req, res, next) => {
+  console.log(1);
   User.findById(req.required.userId)
     .then(user => {
+      console.log(2);
+
       if (typeof user === "undefined" || user === null) {
         res.status(401).json({
-          message: "Failed To Find Your User To Like Article"
+          message: "Failed To Find Your User To Delete Article"
         });
       }
 
-      return user
-        .like(articleId)
-        .then(() => {
-          return req.article.updateLikedCount().then(article => {
-            return res.status(202).json({
-              article: article.toJSONUser(user),
-              message: "Successfully Liked article"
-            });
-          });
-        })
-        .catch(err => {
-          res.status(403).json({
-            message: "Failed To Like Article"
+      if (
+        req.required.userId.toString() === req.article.author._id.toString()
+      ) {
+        console.log(4);
+
+        return req.article.remove().then(result => {
+          res.status(204).json({
+            message: "Successfully deleted article"
           });
         });
+      } else {
+        console.log(5);
+
+        res.status(403).json({
+          message: "Failed To Delete Article"
+        });
+      }
     })
     .catch(err => {
       res.status(500).json({
-        message: "Failed To Like Article"
+        message: "Failed To Delete Article"
       });
     });
 };
@@ -369,66 +462,24 @@ exports.unlikeArticle = (req, res, next) => {
           });
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
           res.status(403).json({
             message: "Failed To Like Article"
           });
         });
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       res.status(500).json({
         message: "Failed To Unlike Article"
       });
     });
 };
 
-exports.deleteArticle = (req, res, next) => {
-  console.log(1);
-  User.findById(req.required.userId)
-    .then(user => {
-  console.log(2);
-
-      if (typeof user === "undefined" || user === null) {
-        res.status(401).json({
-          message: "Failed To Find Your User To Delete Article"
-        });
-      }
-      console.log(3);
-      console.log(req.required.userId);
-      console.log(req.article.author._id);
-
-
-      if (req.required.userId.toString() === req.article.author._id.toString()) {
-  console.log(4);
-
-        return req.article.remove().then(result => {
-          res.status(204).json({
-            message: "Successfully deleted article"
-          });
-        });
-      } else {
-  console.log(5);
-
-        res.status(403).json({
-          message: "Failed To Delete Article"
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "Failed To Delete Article"
-      });
-    });
-};
-
-const authenticatedRequest = (req) => {
-  if (
-    typeof req.required === "undefined" ||
-    req.required === null
-  ) {
+const authenticatedRequest = req => {
+  if (typeof req.required === "undefined" || req.required === null) {
     res.status(500).json({
       message: "Failed to get feed for user"
     });
   }
-}
+};

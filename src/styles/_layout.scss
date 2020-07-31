@@ -1,22 +1,33 @@
 .layout {
-    
-    &__column {
-        flex: 1;
+  &__column {
+    flex: 1;
 
-        &--container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
+    &--container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
+  }
 
-    &__row {
-        flex: 1;
+  &__row {
+    flex: 1;
 
-        &--container {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-        }
+    &--container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
     }
+  }
+
+  &__header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+  }
+
+  &__text {
+      font-size: 14px;
+      color: grey;
+  }
 }

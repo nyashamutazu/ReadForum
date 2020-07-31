@@ -1,0 +1,38 @@
+<div class="profile__preview">
+    <div class="profile__preview--container">
+        <a class="profile__preview--img" [routerLink]="['/profile', profile.username]">
+            <img [src]="profile.profileImage" alt="" class="profile__preview--image">
+        </a>
+        <div class="profile__preview--body">
+            <a class="profile__preview--link" [routerLink]="['/profile', profile.username]">
+                <h1 class="profile__preview--title"> {{ profile.username }}
+                    <svg class="icon icon__verified">
+                        <use xlink:href="/assets/icons.svg#icon-check-circle"></use>
+                    </svg>
+                </h1>
+            </a>
+            <p class="profile__preview--details">{{ profile.bio }}</p>
+            <a class="profile__preview--details profile__preview--details--web">https://website.com</a>
+            <div class="profile__preview--stats--count">
+                <div class="profile__preview--stats--count-content">
+                    <a [routerLink]="['/profile', profile.username ]" class="profile__preview--stats--body">
+                        <p class="profile__preview--stats--amount">{{profile.articleCount || 0}}</p>
+                        <h5 class="profile__preview--stats--title">Articles</h5>
+                    </a>
+                    <a [routerLink]="['/profile', profile.username, 'followers' ]"
+                        class="profile__preview--stats--body">
+                        <p class="profile__preview--stats--amount">{{profile.followers || 0}}</p>
+                        <h5 class="profile__preview--stats--title">Followers</h5>
+                    </a>
+                    <a [routerLink]="['/profile', profile.username, 'following' ]"
+                        class="profile__preview--stats--body">
+                        <p class="profile__preview--stats--amount">{{profile.followings || 0}}</p>
+                        <h5 class="profile__preview--stats--title">Following</h5>
+                    </a>
+                </div>
+            </div>
+            <app-follow-buttons *appShowAuthed="true" [profile]="profile">
+            </app-follow-buttons>
+        </div>
+    </div>
+</div>

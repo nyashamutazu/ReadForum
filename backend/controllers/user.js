@@ -40,7 +40,7 @@ exports.getUser = (req, res, next) => {
       }
 
       res.status(200).json({
-        message: "Successfully updated user",
+        message: "Successfully got user",
         data: {
           user: user.toAuthJSON(),
           expiresIn: null
@@ -90,21 +90,18 @@ exports.updateUser = (req, res, next) => {
 
 exports.loginUser = (req, res, next) => {
   if (typeof req.body.email === "undefined" || req.body.email === null) {
-
     res.status(422).json({
       message: "Please enter an email"
     });
   }
 
   if (typeof req.body.password === "undefined" || req.body.password === null) {
-
     res.status(422).json({
       message: "Please enter password"
     });
   }
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
-
     if (err) {
       res.status(500).json({
         message: "Failed to authenticate"
@@ -112,15 +109,20 @@ exports.loginUser = (req, res, next) => {
     }
 
     if (user) {
+      Article.count({ author: user._id }).then(amount => {
+        user.token = user.createJWT();
 
-      user.token = user.createJWT();
+        user.articleCount = Number(amount);
 
-      return res.status(200).json({
-        message: "Successfully authenticated user",
-        data: {
-          user: user.toAuthJSON(),
-          expiresIn: 3600
-        }
+        user.save();
+
+        return res.status(200).json({
+          message: "Successfully authenticated user",
+          data: {
+            user: user.toAuthJSON(),
+            expiresIn: 3600
+          }
+        });
       });
     } else {
       res.status(422).json({
@@ -131,38 +133,37 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
+  User.findById(req.required.userId)
+    .then(user => {
+      if (typeof user === "undefined" || user === null) {
+        res.status(401).json({
+          message: "Failed To Find Your User To Delete Article"
+        });
+      }
 
-  User.findById(req.required.userId).then(user => {
-    if (typeof user === "undefined" || user === null) {
-      res.status(401).json({
-        message: "Failed To Find Your User To Delete Article"
-      });
-    }
+      Promise.all([
+        Article.deleteMany({ author: user._id }),
+        Comment.deleteMany({ author: user._id }),
+        User.findByIdAndDelete(user._id)
+      ])
+        .then(response => {
+          const articleResponse = response[0];
+          const commentResponse = response[1];
+          const userResponse = response[2];
 
-    Promise.all([
-      Article.deleteMany({author: user._id}),
-      Comment.deleteMany({author: user._id}),
-      User.findByIdAndDelete(user._id)
-    ]).then(response => {
-
-      const articleResponse = response[0];
-      const commentResponse = response[1];
-      const userResponse = response[2];
-
-      return res.status(204).json({
-        message: "Successfully deleted User, Article and Comment"
-      });
-
-    }).catch(err => {
-      res.status(500).json({
-        message: "Failed to delete User, Article or Comment"
-      });
+          return res.status(204).json({
+            message: "Successfully deleted User, Article and Comment"
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            message: "Failed to delete User, Article or Comment"
+          });
+        });
     })
-
-  }).catch(err => {
-    res.status(404).json({
-      message: "Error finding user"
+    .catch(err => {
+      res.status(404).json({
+        message: "Error finding user"
+      });
     });
-  });
-
 };
