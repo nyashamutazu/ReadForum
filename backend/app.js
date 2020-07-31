@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use("/api", indexRoutes);
 
-app.use(express.static(__dirname + "/backend/ReadForum"))
+app.use(express.static(__dirname + "./ReadForum"))
 
 mongoose
   .connect(environment.DATABASE_URL)
@@ -34,7 +34,7 @@ mongoose
   });
 
   app.get("/*", (req, res, next) => {
-    res.sendFile(path.join(__dirname + "/backend/ReadForum/index.html"))
+    res.sendFile(path.join(__dirname + "./ReadForum/index.html"))
   })
 
 module.exports = app;
