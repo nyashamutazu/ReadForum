@@ -1,0 +1,3 @@
+<app-editor-input [uiId]="uiId" [row]="row" [placeholder]="placeholder" [ngModel]="passthrough"
+(ngModelChange)="onChange($event)"></app-editor-input>
+<app-editor-view [uiId]="uiId" [buttons]="buttons" [ngClass]="{'visible': uiVisible}"></app-editor-view>

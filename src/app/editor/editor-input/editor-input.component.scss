@@ -1,0 +1,64 @@
+:host {
+  margin-bottom: 10px;
+
+  .editor {
+    &__inline {
+      &--dropdown {
+        border: 1px solid #ddd;
+        border-bottom: 0;
+  
+        &.contextual {
+          position: absolute;
+          background: #fff;
+          box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.4);
+          border-bottom: 1px solid #ccc;
+        }
+  
+        &.hidden {
+          display: none !important;
+        }
+      }
+    }
+  
+    &__edit {
+      &--target {
+        display: block;
+        padding: 10px;
+        border: 1px solid #ddd;
+        outline: 0;
+        resize: vertical;
+        overflow: auto;
+        background: #fff;
+        color: #000;
+        overflow: visible;
+  
+        &:not(:focus):before {
+          content: attr(title);
+          color: #636c72;
+        }
+      }
+    }
+  }
+}
+
+.editor {
+  &__inline {
+    &--dropdown {
+      border: 1px solid #ddd;
+      border-bottom: 0;
+
+      &.contextual {
+        position: absolute;
+        background: #fff;
+        box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.4);
+        border-bottom: 1px solid #ccc;
+      }
+
+      &.hidden {
+        display: none !important;
+      }
+    }
+  }
+}
+
+

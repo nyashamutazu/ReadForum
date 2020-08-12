@@ -1,0 +1,8 @@
+<div class="editor__inline--dropdown" [class.hidden]="!inlineAction"
+  [class.contextual]="inlineAction?.display === 'contextual'" [style.top]="dropdownPostionTop"
+  [style.left]="dropdownPostionLeft">
+  <ng-template #dropdown></ng-template>
+</div>
+<div [ngClass]="{empty: empty}" [class]="'editor__edit--target ' + customClass" contenteditable="true"
+  [title]="placeholder" [innerHtml]="content">
+</div>

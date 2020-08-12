@@ -1,3 +1,5 @@
+import { EditorIconService } from './editor/services/editor-icon.service';
+import { EditorHtmlParserService } from './editor/services/editor-html-parser.service';
 import { AuthGuard } from './services/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -13,6 +15,7 @@ import {
   ArticlesService,
   ApiService
 } from './services';
+import { EditorControllerService, EditorLegacyBrowserService, EditorParserService } from './editor';
 
 @NgModule({
   declarations: [],
@@ -26,7 +29,12 @@ import {
     JwtService,
     ProfilesService,
     TagsService,
-    UserService
+    UserService,
+    EditorControllerService,
+    EditorHtmlParserService,
+    EditorIconService,
+    EditorLegacyBrowserService,
+    EditorParserService,
   ]
 })
 export class CoreModule {}

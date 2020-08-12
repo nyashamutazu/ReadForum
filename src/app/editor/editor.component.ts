@@ -17,6 +17,7 @@ export class EditorComponent implements OnInit {
     private router: Router
   ) {}
 
+  context = `<p>Start your stroy</p>`;
   article: Article;
   editorForm: FormGroup;
   errors: Errors = { error: {} };
@@ -87,6 +88,9 @@ export class EditorComponent implements OnInit {
 
   addTag() {
     const tag = this.editorForm.get('tag').value;
+    if (!tag || tag.length === 0 || tag === null) {
+      return;
+    }
     this.tagList.push(tag);
     this.editorForm.get('tag').reset();
   }

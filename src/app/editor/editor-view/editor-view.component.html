@@ -1,0 +1,16 @@
+<div>
+    <ng-container *ngFor="let button of buttons">
+        <a *ngIf="button !== 'separator'" tabindex="0" class="editor__button" [name]="button"
+            [ngClass]="{enabled: enabled[button], 'isDropdown': dropdownAction === button}"
+            (click)="do($event, button)">
+            <span *ngIf="sanitizer.bypassSecurityTrustHtml(icon.getIcon(button))" [innerHtml]="sanitizer.bypassSecurityTrustHtml(icon.getIcon(button))"></span>
+            <span class="editor__title"
+                *ngIf="!icon.getIcon(button)">{{editorControllerService.getAction(button).label}}</span>
+            <!-- <span class="reader">{{editorControllerService.getAction(button).name}}</span> -->
+        </a>
+        <div *ngIf="button === 'separator'" class="editor__separator"></div>
+    </ng-container>
+    <div class="editor__dropdown" [ngClass]="{visible: dropdownAction}">
+        <ng-template #dropdown></ng-template>
+    </div>
+</div>
