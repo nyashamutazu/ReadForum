@@ -9,10 +9,23 @@
   align-items: center;
   position: relative;
 
-
   &__body {
     flex: 0 0 300px;
     padding: 0px 30px 30px;
+  }
+
+  &__article {
+    background: unset;
+    box-shadow: unset;
+    border-radius: unset;
+    display: unset;
+    height: unset;
+    max-height: 500px;
+  }
+
+  &__img {
+    object-fit: cover;
+
   }
 
   &__home {

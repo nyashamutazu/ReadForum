@@ -1,14 +1,24 @@
-import { Component, OnInit, Input, HostListener, ElementRef, ComponentFactoryResolver } from '@angular/core';
-import { EditorControllerService, EditorParserService, EditorIconService, defaultButtons } from 'src/app/core';
+import {
+  Component,
+  Input,
+  HostListener,
+  ElementRef,
+  ComponentFactoryResolver,
+  Output
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { defaultButtons, EditorControllerService, EditorParserService, EditorIconService } from 'src/app/core';
 
 let instanceCounter = 0;
 
 @Component({
   selector: 'app-text-editor',
   templateUrl: './text-editor.component.html',
-  styleUrls: ['./text-editor.component.scss']
+  styleUrls: ['./text-editor.component.scss'],
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: TextEditorComponent, multi: true }
+  ]
 })
-
 export class TextEditorComponent {
   @Input()
   row: number;
@@ -75,5 +85,4 @@ export class TextEditorComponent {
     this.passthrough = value;
     this.changed.forEach(f => f(value));
   }
-
 }

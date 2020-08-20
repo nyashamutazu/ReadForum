@@ -1,16 +1,17 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Article } from './../models/article.model';
 import { ArticleListConfig } from './../models/article-list-config.model';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticlesService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private http: HttpClient) {}
 
   private articles: Article[] = [];
   private articlesUpdated = new Subject<{
@@ -18,10 +19,7 @@ export class ArticlesService {
     articleCount: number;
   }>();
 
-  query(
-    config: ArticleListConfig
-  ): Observable<any> {
-
+  query(config: ArticleListConfig): Observable<any> {
     const params = {};
 
     Object.keys(config.filters).forEach(k => {
@@ -30,24 +28,40 @@ export class ArticlesService {
 
     const type = `${config.type}`;
 
-    return this.apiService.get(`/articles/${type}`, new HttpParams({ fromObject: params }));
+    return this.apiService.get(
+      `/articles/${type}`,
+      new HttpParams({ fromObject: params })
+    );
   }
 
   get(slug): Observable<any> {
     return this.apiService
       .get(`/articles/${slug}`)
-      .pipe(map(data => data.article ));
+      .pipe(map(data => data.article));
   }
 
-  save(article: Article, creating: boolean): Observable<Article> {
-
-    if (typeof creating === 'undefined' || creating === null) {
-      console.log('Updating');
-      return this.apiService.put(`/articles/${article.slug}`, {article}).pipe(map(data => data.article));
+  save(article: any, creating: boolean): Observable<Article> {
+    if (!creating) {
+      return this.apiService
+        .put(`/articles/${article.slug}`, { article })
+        .pipe(map(data => data.article));
     } else {
-      console.log('Creating');
+      const data = new FormData();
+      data.append('title', article.title);
+      data.append('description', article.description);
+      data.append('imageFile', article.imageFile);
+      data.append('body', article.body);
+      // tslint:disable-next-line:forin
+      for (const i in article.tagList) {
+        data.append(`tag[${i}]`, article.tagList[i]);
+      }
 
-      return this.apiService.post(`/articles`, {article}).pipe(map(data => data.article));
+      return this.http
+        .post<{ message: string; article: Article }>(
+          `${environment.api_url}/articles`,
+          data
+        )
+        .pipe(map(response => response.article));
     }
   }
 

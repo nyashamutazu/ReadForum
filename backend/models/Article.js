@@ -11,6 +11,11 @@ const ArticleSchema = mongoose.Schema(
       required: true,
       lowercase: true
     },
+    imageUrl: {
+      type: String,
+      required: true,
+      lowercase: true
+    },
     title: {
       type: String,
       required: true
@@ -72,6 +77,7 @@ class ArticleClass {
   toJSONUser(user) {
     return {
       slug: this.slug,
+      imageUrl: this.imageUrl,
       title: this.title,
       description: this.description,
       body: this.body,

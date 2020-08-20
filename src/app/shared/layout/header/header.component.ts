@@ -17,12 +17,12 @@ export class HeaderComponent implements OnInit {
 
   searchForm: FormGroup;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
-      search: new FormControl(null, {validators: [Validators.required]}),
-      radio: new FormControl('account', {validators: [Validators.required]})
+      search: new FormControl(null, { validators: [Validators.required] }),
+      radio: new FormControl('account', { validators: [Validators.required] })
     });
 
     this.authSub = this.userService.currentUserListner.subscribe(user => {
@@ -36,7 +36,9 @@ export class HeaderComponent implements OnInit {
 
   search() {
     if (this.searchForm.valid) {
-      this.router.navigate(['search', this.searchForm.get('radio').value], {queryParams: {q: this.searchForm.get('search').value}});
+      this.router.navigate(['search', this.searchForm.get('radio').value], {
+        queryParams: { q: this.searchForm.get('search').value }
+      });
     }
     return;
   }

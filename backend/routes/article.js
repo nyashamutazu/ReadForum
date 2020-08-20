@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router()
 
 const authChecker = require("../middlewares/check-auth");
-
+const upload = require("../middlewares/file");
 const articleController = require("../controllers/articles");
 const commentsController = require("../controllers/comments");
 
@@ -15,7 +15,7 @@ router.get('/search', authChecker, articleController.articleSearch)
 router.get('/:article', authChecker, articleController.getArticle);
 router.get('/:article/comments', authChecker, commentsController.getComments);
 
-router.post('', authChecker, articleController.postArticle);
+router.post('', authChecker, upload, articleController.postArticle);
 
 router.post('/:article/liked', authChecker, articleController.likeArticle);
 router.post('/:article/comments', authChecker, commentsController.postComment);

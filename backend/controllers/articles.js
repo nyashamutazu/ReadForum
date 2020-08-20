@@ -1,5 +1,10 @@
+const fs = require("fs");
+
 const Article = require("../models/Article");
 const User = require("../models/User");
+
+const AWS_CONFIG = require("../config/aws.conig");
+const s3 = require("../config/aws.storage");
 
 exports.paramsArticle = (req, res, next, slug) => {
   Article.findOne({ slug: slug })
@@ -22,38 +27,75 @@ exports.paramsArticle = (req, res, next, slug) => {
 };
 
 exports.postArticle = (req, res, next) => {
-  User.findById(req.required.userId)
-    .then(user => {
-      if (typeof user === "undefined" || user === null) {
-        res.status(404).json({
-          message: "Failed To Find Your User To Post Article"
-        });
-      }
+  console.log(1);
+  if (typeof req.file === "undefined" || req.file === null) {
+    console.log(req.body);
+    console.log("File not attached");
+  } else {
+    const filename = req.file.filename;
+    console.log(2);
 
-      const article = new Article(req.body.article);
+    fs.readFile(__dirname + "/../uploads/" + filename, (err, data) => {
+      console.log(3);
 
-      article.author = user;
+      const params = {
+        Bucket: AWS_CONFIG.AWS.BUCKET_NAME,
+        Key: `${filename}`,
+        Body: data
+      };
+      console.log(4);
 
-      article
-        .save()
-        .then(() => {
-          user
-            .updateArticleCount()
-            .then(done => {
+      Promise.all([
+        s3.upload(params).promise(),
+        User.findById(req.required.userId)
+      ])
+        .then(results => {
+          console.log(5);
+
+          const data = results[0];
+          const user = results[1];
+
+          if (typeof user === "undefined" || user === null) {
+            res.status(404).json({
+              message: "Failed To Find Your User To Post Article"
+            });
+          }
+          console.log(6);
+
+          const article = new Article(req.body);
+
+          user.articleCount++;
+          user.save();
+          article.author = user;
+          article.imageUrl = data.Location;
+
+          console.log(article);
+
+          try {
+            fs.unlinkSync(__dirname + "/../uploads/" + filename);
+            console.log("file deleted");
+          } catch (err) {
+            console.log("File err", err);
+          }
+
+          console.log(7);
+          
+          article
+            .save()
+            .then(() => {
+              console.log(8);
               res.status(200).json({
                 message: "Successfully created Article",
-                article: article.toJSONUser(done)
+                article: article.toJSONUser(user)
               });
             })
-            .catch(err => console.log("Failed to update count", err));
+            .catch(err => console.log(err));
         })
-        .catch(err => console.log(err));
-    })
-    .catch(err => {
-      res.status(404).json({
-        message: "Error posting article"
-      });
+        .catch(err => {
+          console.log("Error", err);
+        });
     });
+  }
 };
 
 exports.getRecentArticles = (req, res, next) => {
@@ -396,11 +438,8 @@ exports.putArticle = (req, res, next) => {
 };
 
 exports.deleteArticle = (req, res, next) => {
-  console.log(1);
   User.findById(req.required.userId)
     .then(user => {
-      console.log(2);
-
       if (typeof user === "undefined" || user === null) {
         res.status(401).json({
           message: "Failed To Find Your User To Delete Article"
@@ -410,16 +449,12 @@ exports.deleteArticle = (req, res, next) => {
       if (
         req.required.userId.toString() === req.article.author._id.toString()
       ) {
-        console.log(4);
-
         return req.article.remove().then(result => {
           res.status(204).json({
             message: "Successfully deleted article"
           });
         });
       } else {
-        console.log(5);
-
         res.status(403).json({
           message: "Failed To Delete Article"
         });
@@ -433,28 +468,20 @@ exports.deleteArticle = (req, res, next) => {
 };
 
 exports.unlikeArticle = (req, res, next) => {
-  console.log(1);
   const articleId = req.article._id;
 
   User.findById(req.required.userId)
     .then(user => {
-      console.log(2);
-
       if (typeof user === "undefined" || user === null) {
         res.status(401).json({
           message: "Failed To Find Your User To Unlike Article"
         });
       }
-      console.log(3);
 
       return user
         .unLike(articleId)
         .then(() => {
-          console.log(4);
-
           return req.article.updateLikedCount().then(article => {
-            console.log(5);
-
             return res.status(202).json({
               article: article.toJSONUser(user),
               message: "Successfully Unliked article"

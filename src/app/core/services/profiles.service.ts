@@ -17,9 +17,10 @@ export class ProfilesService {
     Object.keys(config.filters).forEach(k => {
       params[k] = config.filters[k];
     });
+    console.log(params);
 
     return this.apiService.get(
-      `/profiles/${config.filters.username}/${config.type}`,
+      `/profiles/${config.type}`,
       new HttpParams({ fromObject: params })
     );
   }

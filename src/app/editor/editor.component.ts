@@ -1,6 +1,5 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { ArticlesService } from './../core/services/articles.service';
-import { Article } from 'src/app/core';
+import { Article, ArticlesService, mimeType } from 'src/app/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Errors } from '../core';
@@ -21,7 +20,12 @@ export class EditorComponent implements OnInit {
   article: Article;
   editorForm: FormGroup;
   errors: Errors = { error: {} };
+
+  imageFileName: string;
+  imagePreview: string;
+
   isSubmitting = true;
+  tag = '';
   tagList: string[] = [];
 
   creating = true;
@@ -34,7 +38,8 @@ export class EditorComponent implements OnInit {
     this.editorForm = new FormGroup({
       title: new FormControl(null, { validators: [Validators.required] }),
       description: new FormControl(null, { validators: [Validators.required] }),
-      body: new FormControl(null, { validators: [Validators.required] }),
+      imageFile: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]}),
+      body: new FormControl(null),
       tag: new FormControl(null)
     });
 
@@ -66,14 +71,17 @@ export class EditorComponent implements OnInit {
   submitArticle() {
     this.isSubmitting = true;
     this.errors = { error: {} };
+
     if (this.editorForm.valid) {
-      const form = { ...this.editorForm.value };
+      const form = {...this.editorForm.value, tagList: this.tagList};
       delete form.tag;
-      form.tagList = this.tagList;
+      form.body = this.context;
+      form.imageFile = this.editorForm.get('imageFile').value;
 
       this.articleService.save(form, this.creating).subscribe(
         article => {
-          this.router.navigate(['/article', article.slug]);
+          console.log(article);
+          // this.router.navigate(['/article', article.slug]);
           this.isSubmitting = false;
         },
         err => {
@@ -82,17 +90,34 @@ export class EditorComponent implements OnInit {
         }
       );
     } else {
+      console.log('form not valid');
       return;
     }
   }
 
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.isSubmitting = true;
+    this.imageFileName = file.name;
+    this.editorForm.patchValue({imageFile: file});
+
+    this.editorForm.get('imageFile').updateValueAndValidity();
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.isSubmitting = false;
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
   addTag() {
-    const tag = this.editorForm.get('tag').value;
-    if (!tag || tag.length === 0 || tag === null) {
+    if (typeof this.tag === 'undefined' || this.tag === null || this.tag.length === 0) {
       return;
     }
-    this.tagList.push(tag);
-    this.editorForm.get('tag').reset();
+
+    this.tagList.push(this.tag);
+    this.tag = '';
   }
 
   removeTag(i: number) {

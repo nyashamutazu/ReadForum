@@ -1,3 +1,5 @@
+import { EditorParserService } from './../core/editor/services/editor-parser.service';
+import { EditorHtmlParserService } from 'src/app/core';
 import { NgModule } from '@angular/core';
 import { EditorComponent } from './editor.component';
 import { SharedModule } from '../shared/shared.module';
@@ -11,6 +13,6 @@ import { EditorInputComponent } from './editor-input/editor-input.component';
 @NgModule({
   declarations: [EditorComponent, TextEditorComponent, EditorDropdownComponent, EditorViewComponent, EditorInputComponent],
   imports: [SharedModule, EditorRoutingModule],
-  providers: [EditorArticleResolverService]
+  providers: [EditorArticleResolverService, EditorHtmlParserService, EditorParserService]
 })
 export class EditorModule {}

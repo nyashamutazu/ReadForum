@@ -4,7 +4,7 @@
   .editor {
     &__inline {
       &--dropdown {
-        border: 1px solid #ddd;
+        border: none;
         border-bottom: 0;
   
         &.contextual {
@@ -19,12 +19,12 @@
         }
       }
     }
-  
+
     &__edit {
       &--target {
         display: block;
         padding: 10px;
-        border: 1px solid #ddd;
+        // border: 1px solid #ddd;
         outline: 0;
         resize: vertical;
         overflow: auto;

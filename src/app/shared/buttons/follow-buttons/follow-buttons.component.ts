@@ -42,36 +42,25 @@ export class FollowButtonsComponent implements OnInit {
       user => {
         if (this.profile.following) {
           this.profile.following = false;
-          console.log('unfollowing 1');
 
           this.profileService.unfollow(this.profile.username).subscribe(
             response => {
-              console.log('unfollowing 2');
-
               this.profile.following = false;
               this.isSubmitting = false;
             },
             err => {
-              console.log('failed unfollowing 1');
-
               this.profile.following = true;
             }
           );
         } else {
-          console.log('following 1');
-
           this.profile.following = true;
 
           this.profileService.follow(this.profile.username).subscribe(
             response => {
-              console.log('following 2');
-
               this.isSubmitting = false;
               this.profile.following = true;
             },
             err => {
-              console.log('failed following 1');
-
               this.profile.following = false;
             }
           );

@@ -1,6 +1,10 @@
 .article {
+  max-width: 800px;
+  margin: auto;
+
   &__container {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--color-grey-border);
     padding-bottom: 50px;
   }
 
@@ -22,7 +26,8 @@
   }
   &__actions {
     padding: 30px 10px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--color-grey-border);
   }
 
   &__comments {
@@ -36,7 +41,6 @@
 
   &__authentication {
     padding: 10px 0;
-
   }
 
   &__form {

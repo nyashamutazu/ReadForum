@@ -46,4 +46,21 @@
   &__facebook {
     background: #3b5998;
   }
+
+
+  &__container {
+    width: fit-content;
+    margin-left: auto;
+    display: flex;
+    overflow: visible;
+
+    .icon__social {
+      padding: 8px;
+      margin-left: 5px;
+      border-radius: 2px;
+      width: 20px;
+      height: 20px;
+      background: grey;
+    }
+  }
 }

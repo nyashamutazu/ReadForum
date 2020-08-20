@@ -4,8 +4,7 @@
             <div class="editor">
                 <app-list-errors [errors]="errors"></app-list-errors>
 
-                <form [formGroup]="editorForm" class="form" (keydown.enter)="$event.preventDefault()"
-                    (submit)="submitArticle()">
+                <form [formGroup]="editorForm" class="form" (keydown.enter)="$event.preventDefault()" enctype="multipart/form-data">
                     <div class="form__controller">
                         <input type="text" formControlName="title" placeholder="Article Title" required
                             class="form__input form__title" [disabled]="isSubmitting">
@@ -15,27 +14,38 @@
                             class="form__input form__description" rows="4" [disabled]="isSubmitting"></textarea>
                     </div>
                     <div class="form__controller">
-                        <app-text-editor [(ngModel)]="context" name="editor" placeholder=""></app-text-editor>
+                        <button type="button" class="form__button--input" (click)="imageFile.click()">
+                            <svg class="form__button--icon">
+                                <use xlink:href="/assets/icon-editor.svg#icon-image"></use>
+                            </svg>
+                        </button>
+                        <input type="file" hidden #imageFile id="imageFile" (change)="onImagePicked($event)">
                     </div>
-                    <div class="form__controller form__controller--tags">
-                        <input formControlName="tag" class="form__input" type="text" [disabled]="isSubmitting"
-                            placeholder="Add tags" (keyup.enter)="addTag()">
+                    <div class="form__controller form__image--preview" *ngIf="imagePreview && imagePreview !== ''">
+                        <img [src]="imagePreview" [alt]="imageFileName" class="form__image--preview-img">
+                    </div>
+                </form>
+                <div class="form__controller">
+                    <app-text-editor [(ngModel)]="context" placeholder=""></app-text-editor>
+                </div>
 
-                        <div class="form__tags--container">
-                            <div class="form__tags" *ngFor="let tag of tagList; let i = index">
-                                <p class="form__tag" (click)="removeTag(i)">
-                                    {{ tag }}
-                                </p>
-                            </div>
+                <div class="form__controller form__controller--tags">
+                    <input class="form__input" [(ngModel)]="tag" type="text" [disabled]="isSubmitting"
+                        placeholder="Add tags" (keyup.enter)="addTag()">
+
+                    <div class="form__tags--container">
+                        <div class="form__tags" id="form__tag" *ngFor="let tag of tagList; let i = index">
+                            <p class="form__tag" (click)="removeTag(i)">
+                                {{ tag }}
+                            </p>
                         </div>
                     </div>
-                    <div class="form__controller">
-                        <button class="btn btn__primary" [disabled]="isSubmitting">
-                            {{mode}} Article
-                        </button>
-                    </div>
-
-                </form>
+                </div>
+                <div class="form__controller">
+                    <button class="btn btn__primary" [disabled]="isSubmitting" (click)="submitArticle()">
+                        {{mode}} Article
+                    </button>
+                </div>
             </div>
         </div>
     </div>

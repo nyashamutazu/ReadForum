@@ -1,23 +1,29 @@
 <div class="article__preview">
     <div class="article__preview--container">
-        <div class="article__preview--header">
-            <a [routerLink]="['/article', article.slug]" class="article__preview--link">
-                <h1 class="article__preview--title">{{ article.title }}</h1>
+        <div class="article__preview--head">
+            <a [routerLink]="['/article', article.slug]" class="article__preview--link"><img [src]="article.imageUrl"
+                    [alt]="article.description" class="article__preview--img">
             </a>
         </div>
-        <a [routerLink]="['/article', article.slug]" class="article__preview--link">
-            <div class="article__preview--body">
+        <div class="article__preview--header">
+            <a [routerLink]="['/article', article.slug]" class="article__preview--link">
+                <h2 class="article__preview--title">{{ article.title }}</h2>
+            </a>
+        </div>
+        <div class="article__preview--body">
+            <a [routerLink]="['/article', article.slug]" class="article__preview--link">
+
                 <p class="article__preview--text">{{ article.description }}</p>
                 <ul class="tag__list">
                     <li class="tag__item" *ngFor="let tag of article.tagList">
                         {{ tag }}
                     </li>
                 </ul>
+            </a>
+            <div class="article__preview--actions">
+                <app-favourite-buttons *appShowAuthed="true" [article]="article" (toggle)="onToggleLiked($event)">
+                </app-favourite-buttons>
             </div>
-        </a>
-        <div class="article__preview--actions">
-            <app-favourite-buttons *appShowAuthed="true" [article]="article" (toggle)="onToggleLiked($event)">
-            </app-favourite-buttons>
         </div>
         <div class="article__preview--footer">
             <app-article-meta [article]="article">

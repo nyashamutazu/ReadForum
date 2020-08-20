@@ -30,7 +30,7 @@ exports.getUserProfile = (req, res, next, username) => {
 };
 
 exports.profileSearch = (req, res, next) => {
-  console.log("About to search this btch")
+  console.log(1)
   let limit = 20;
   let offset = 0;
 

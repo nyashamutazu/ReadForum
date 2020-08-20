@@ -1,51 +1,54 @@
-<div *ngIf="isLoading">
-    <h1>Is Loading</h1>
+<div class="container">
+    <div *ngIf="isLoading">
+        <h1>Is Loading</h1>
+    </div>
 </div>
 <div class="section" *ngIf="!isLoading">
-
-    <div class="banner">
+    <div class="section__header">
         <div class="container">
-            <div class="banner__body banner__article">
-                <h1 class="banner__heading">{{ article.title }}</h1>
-
-                <app-article-meta [article]="article">
-                    <div>
-                        <!-- <span *ngIf="userMode">
-                        <a [routerLink]="['/editor', article.slug]" class="btn btn__secondary">
-                            <svg class="icon">
-                                <use xlink:href="/assets/icons.svg#icon-drive_file_rename_outline"></use>
-                            </svg>
-                            <p class="paragraph__qoute">Edit Article</p>
-                        </a>
-
-                        <button class="btn btn__warn" [ngClass]="{disabled: isDeleting}" (click)="deleteArticle()">
-                            <svg class="icon">
-                                <use xlink:href="/assets/icons.svg#icon-delete_outline"></use>
-                            </svg>
-                            <p class="paragraph__qoute">Delete Article</p>
-                        </button>
-                    </span> -->
-
-                        <span *ngIf="userMode">
-                            <app-follow-buttons *appShowAuthed="true" [profile]="article.author"
-                                (toggle)="onToggleFollowing($event)">
-                            </app-follow-buttons>
-                            <app-favourite-buttons *appShowAuthed="true" [article]="article"
-                                (toggle)="onToggleLiked($event)">
-                                {{ article.likeCount }}
-                            </app-favourite-buttons>
-                        </span>
-                    </div>
-                </app-article-meta>
+            <h1 class="heading__article heading__center">{{ article.title }}</h1>
+        </div>
+    </div>
+    <div class="banner banner__article">
+        <div class="container" style="padding: 0;"><img [src]="article.imageUrl" alt="" class="banner__img">
+        </div>
+    </div>
+</div>
+<div class="section__social" *ngIf="!isLoading">
+    <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap">
+        <app-article-meta [article]="article">
+            <div>
+                <span *ngIf="userMode">
+                    <app-follow-buttons *appShowAuthed="true" [profile]="article.author"
+                        (toggle)="onToggleFollowing($event)">
+                    </app-follow-buttons>
+                    <app-favourite-buttons *appShowAuthed="true" [article]="article" (toggle)="onToggleLiked($event)">
+                        {{ article.likeCount }}
+                    </app-favourite-buttons>
+                </span>
             </div>
+        </app-article-meta>
+
+        <div class="icon__container">
+            <svg class="icon icon__social icon__facebook">
+                <use xlink:href="/assets/icons.svg#icon-facebook"></use>
+            </svg>
+            <svg class="icon icon__social icon__twitter">
+                <use xlink:href="/assets/icons.svg#icon-twitter"></use>
+            </svg>
+            <svg class="icon icon__social icon__google">
+                <use xlink:href="/assets/icons.svg#icon-google"></use>
+            </svg>
+            <svg class="icon icon__social icon__instagram">
+                <use xlink:href="/assets/icons.svg#icon-instagram"></use>
+            </svg>
         </div>
     </div>
 </div>
 <div class="section__secondary" *ngIf="!isLoading">
     <div class="container">
         <div class="article__container">
-            <div class="article">
-                {{ article.body }}
+            <div class="article" [innerHtml]="article.body">
             </div>
             <ul class="article__tags">
                 <li class="article__tag" *ngFor="let tag of article.tagList">
@@ -79,7 +82,7 @@
                 </div>
             </app-article-meta>
             <div class="article__action--share">
-                    <!-- <a href="#" (click)="fb($event)"><img src="assets/imgs/fb.svg"/></a> -->
+                <!-- <a href="#" (click)="fb($event)"><img src="assets/imgs/fb.svg"/></a> -->
             </div>
         </div>
         <div class="article__comments">
@@ -105,9 +108,12 @@
 
                 <app-article-comment *ngFor="let comment of comments" [comment]="comment"
                     (deleteComment)="onDeleteComment(comment)"></app-article-comment>
-
-
             </div>
         </div>
+    </div>
+</div>
+<div class="section__secondary" *ngIf="!isLoading">
+    <div class="container">
+        <h2>Recent articles by author</h2>
     </div>
 </div>

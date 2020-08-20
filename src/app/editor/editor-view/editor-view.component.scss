@@ -1,83 +1,82 @@
 :host {
-    color: #333;
-    background: rgb(235, 235, 235);
-    user-select: none;
-    position: relative;
-    overflow: visible;
-    padding: 5px;
+  color: #333;
+  background: rgb(235, 235, 235);
+  user-select: none;
+  position: relative;
+  overflow: visible;
+  padding: 5px;
+  box-sizing: border-box;
+  display: block;
+  border-radius: 3px;
+}
+
+.editor {
+  &__button {
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+    margin: 2px 1px;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 14px;
     box-sizing: border-box;
-    display: block;
+    transition: all 0.3s;
     border-radius: 3px;
-  }
-  
-  .editor {
-    &__button {
-      display: inline-block;
-      min-width: 30px;
-      text-align: center;
-      margin: 2px 1px;
-      vertical-align: middle;
-      cursor: pointer;
-      font-size: 14px;
-      box-sizing: border-box;
-      transition: all 0.3s;
-      border-radius: 3px;
+    background: #e5e5e5;
+    fill: #333;
+    padding: 3px;
+
+    &:active,
+    &.enabled,
+    &.isDropdown {
       background: #e5e5e5;
-      fill: #333;
-      padding: 3px;
-  
-      &:active,
-      &.enabled,
-      &.isDropdown {
-        background: #e5e5e5;
-      }
-  
-      &:hover,
-      &:focus {
-        background: #ccc;
-      }
-  
-      svg {
-        fill: #333 !important;
-        height: 15px !important;
-        width: 15px !important;
-      }
     }
-  
-    &__reader {
-      display: none;
+
+    &:hover,
+    &:focus {
+      background: #ccc;
     }
-  
-    &__separator {
-      display: inline-block;
-      width: 2px;
-      height: 14px;
-      vertical-align: middle;
-      background: #000;
-      border-radius: 2px;
-      margin: 0 5px;
-    }
-  
-    &__dropdown {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-      font-size: 14px;
-      user-select: all;
-      box-sizing: border-box;
-  
-      border-radius: 3px;
-      background-color: #e5e5e5;
-      position: absolute;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-  
-      box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
-  
-      &.visible {
-        opacity: 1;
-        pointer-events: all;
-      }
+
+    svg {
+      fill: #333 !important;
+      height: 15px !important;
+      width: 15px !important;
     }
   }
-  
+
+  &__reader {
+    display: none;
+  }
+
+  &__separator {
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    vertical-align: middle;
+    background: #000;
+    border-radius: 2px;
+    margin: 0 5px;
+  }
+
+  &__dropdown {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 14px;
+    user-select: all;
+    box-sizing: border-box;
+
+    border-radius: 3px;
+    background-color: #e5e5e5;
+    position: absolute;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+
+    &.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}

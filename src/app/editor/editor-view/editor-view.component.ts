@@ -17,6 +17,7 @@ import {
 import { Subscription } from 'rxjs';
 import { EditorControllerService, EditorParserService, EditorIconService, EditorLegacyBrowserService, defaultButtons } from 'src/app/core';
 
+
 @Component({
   selector: 'app-editor-view',
   templateUrl: './editor-view.component.html',

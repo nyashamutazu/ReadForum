@@ -119,21 +119,6 @@ class UserClass {
     );
   };
 
-  // updateArticleCount() {
-  //   console.log("In Updated Count");
-  //   const user = this;
-  //   console.log('User id', user._id);
-
-  //   return Article.count({author: user._id}).then(count => {
-  //     console.log('Complete');
-  //     user.articleCount = Number(count);
-  //     return user.save();
-  //   }).catch(err => {
-  //     return console.log('Errrr \n ', err)
-      
-  //   })
-  // }
-
   toAuthJSON() {
     return {
       username: this.username,
