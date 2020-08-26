@@ -2,41 +2,18 @@
     <div class="container" style="padding-top: 20px;">
         <div class="banner" *appShowAuthed="false">
             <div class="banner__body">
-                <h1 class="banner__heading">Sign Up Now To Share</h1>
+                <h1 class="heading__secondary">Sign Up Now To Share</h1>
                 <p class="banner__text">Join our growing community.</p>
-                <!-- <a routerLink="sign-up" class="btn btn__secondary">Sign Up</a> -->
                 <div class="banner__actions">
-                    <a routerLink="sign-in" class="btn btn__primary">Sign In</a>
-                    <a routerLink="sign-up" class="btn btn__secondary">Sign Up</a>
+                    <a routerLink="sign-in" class="btn btn__secondary">Sign In</a>
+                    <a routerLink="sign-up" class="btn btn__tertiary">Sign Up</a>
                 </div>
-            </div>
-            <div class="banner__home">
             </div>
         </div>
     </div>
     <div class="container" style="padding-top: 20px;">
-        <div class="category__container">
-            <a routerLink="/editor" class="category category__main">
-                <svg class="icon">
-                    <use xlink:href="/assets/icons.svg#icon-pencil"></use>
-                </svg>
-                <p class="heading__tertiary">Write Article</p>
-            </a>
-            <a routerLink="/trending" class="category">
-                <svg class="icon">
-                    <use xlink:href="/assets/icons.svg#icon-trending_up"></use>
-                </svg>
-                <p class="heading__tertiary">Trending</p>
-            </a>
-            <a routerLink="/results" class="category">
-                <svg class="icon">
-                    <use xlink:href="/assets/icons.svg#icon-search"></use>
-                </svg>
-                <p class="heading__tertiary">Search</p>
-            </a>
-        </div>
-        <div class="feed__container">
-            <div class="feed__column--1">
+        <div class="flex__container">
+            <div class="">
                 <div class="feed">
                     <div class="feed__nav">
                         <ul class="nav__list">
@@ -46,21 +23,33 @@
                             <li class="nav__item"><a
                                     [ngClass]="{'active': listConfig.type === 'all' && !listConfig.filters.tag}"
                                     (click)="setViewTo('')" class="nav__link">Global</a></li>
-                            <!-- <li class="nav__item"><a class="nav__link  nav__link--active"> {{ listConfig.filters.tag }}</a></li> -->
                         </ul>
                     </div>
                 </div>
-
-                <app-article-list [limit]="10" [listConfig]="listConfig"></app-article-list>
-
-                <!-- <div>
-                    <h2 class="heading__secondary">Trending</h2>
-                    <app-article-list [limit]="10" [trendingConfig]="trendingConfig"></app-article-list>
-
-                </div> -->
-
             </div>
-            <div class="feed__column--2">
+            <div class="category__container">
+                <a routerLink="/editor" class="category category__main">
+                    <svg class="icon">
+                        <use xlink:href="/assets/icons.svg#icon-pencil"></use>
+                    </svg>
+                    <p class="heading__tertiary">Write Article</p>
+                </a>
+                <a routerLink="/trending" class="category">
+                    <svg class="icon">
+                        <use xlink:href="/assets/icons.svg#icon-trending_up"></use>
+                    </svg>
+                    <p class="heading__tertiary">Trending</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- <div class="feed__container"> -->
+
+        <div style="padding-top: 20px;">
+            <app-article-list [limit]="10" [listConfig]="listConfig"></app-article-list>
+        </div>
+
+        <!-- <div class="feed__column--2">
                 <div class="feed__sidenav">
                     <ul class="feed__sidenav--list">
                         <li class="feed__sidebar--item">
@@ -79,8 +68,8 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
 
     </div>
 </section>

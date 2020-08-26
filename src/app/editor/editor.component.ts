@@ -49,13 +49,15 @@ export class EditorComponent implements OnInit {
         this.creating = false;
         this.slug = paramMap.get('slug');
         this.articleService.get(this.slug).subscribe(article => {
-          this.article = article;
+          console.log(article);
           this.editorForm.setValue({
             title: article.title,
             description: article.description,
             body: article.body,
-            tag: null
+            tag: null,
+            imageFile: article.imageUrl || null
           });
+          this.context = article.body;
           this.tagList = article.tagList;
           this.isSubmitting = false;
         });
@@ -90,7 +92,7 @@ export class EditorComponent implements OnInit {
         }
       );
     } else {
-      console.log('form not valid');
+      console.log('form not valid', this.editorForm);
       return;
     }
   }

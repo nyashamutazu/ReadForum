@@ -1,6 +1,6 @@
 .btn {
   padding: 0px 12px;
-  border-radius: 2px;
+  border-radius: 0px;
   box-shadow: var(--shadow-light);
   cursor: pointer;
   font-size: 14px;
@@ -15,7 +15,6 @@
   align-items: center;
   margin-left: 5px;
   background: transparent;
-  border: 1px solid;
 
   &:hover {
     .icon {
@@ -43,7 +42,7 @@
   }
 
   &__primary {
-    border-color: var(--color-secondary);
+    box-shadow: none;
     color: var(--color-secondary) !important;
 
     &:hover {
@@ -53,12 +52,20 @@
   }
 
   &__secondary {
-    border-color: var(--color-secondary);
+    background: var(--color-secondary-light);
+    color: #fff !important;
+
+    &:hover {
+      background: var(--color-secondary);
+    }
+  }
+
+  &__tertiary {
     background: var(--color-secondary);
     color: #fff !important;
 
     &:hover {
-      background: var(--color-secondary-light);
+      background: var(--color-secondary-dark);
     }
   }
 
@@ -111,13 +118,13 @@
     justify-content: center;
     background: var(--color-grey-background);
     box-shadow: var(--shadow-light);
-    transition: all .3s;
+    transition: all 0.3s;
 
     &:hover {
       background: var(--color-grey-background-dark);
       box-shadow: var(--shadow-dark);
       border-color: var(--color-grey-border);
-      
+
       .icon {
         fill: grey;
       }
@@ -127,7 +134,7 @@
       fill: grey;
       padding: 0;
       margin: 0;
-      transition: all .3s;
+      transition: all 0.3s;
     }
   }
 

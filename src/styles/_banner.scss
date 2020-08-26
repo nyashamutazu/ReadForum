@@ -1,17 +1,25 @@
 .banner {
   border-radius: 5px;
   height: 320px;
-  box-shadow: var(--shadow-light);
   flex-direction: row;
   margin-bottom: 30px;
-  background: var(--color-background-light);
+  background: rgb(248, 248, 248);
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+
 
   &__body {
-    flex: 0 0 300px;
+    flex: 1;
     padding: 0px 30px 30px;
+    text-align: center;
+  }
+
+  &__img {
+    width: 100%;
   }
 
   &__article {
@@ -21,19 +29,6 @@
     display: unset;
     height: unset;
     max-height: 500px;
-  }
-
-  &__img {
-    object-fit: cover;
-
-  }
-
-  &__home {
-    background: url("/assets/3838061.png") no-repeat;
-    background-position: right top;
-    background-size: cover;
-    height: 320px;
-    flex: 1;
   }
 
   &__user {
@@ -58,6 +53,7 @@
   &__actions {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
 
     .btn {

@@ -17,14 +17,13 @@
   align-items: stretch;
   justify-content: flex-start;
   padding: 0;
-  margin: 70px 0 0;
+  margin: 60px 0 0;
   z-index: 0;
   min-height: 100vh;
 
   &__sidebar {
     flex: 0 0 200px;
     z-index: 0;
-    // flex-grow: 1;
   }
 
   &__content {

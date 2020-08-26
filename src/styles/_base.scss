@@ -15,15 +15,18 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: unset;
   margin: 0 auto;
   padding-top: 40px;
   padding-bottom: 20px;
 
   &__nav {
-    max-width: 1290px;
     margin: 0 auto;
     padding: 20px;
+  }
+
+  &__article {
+    max-width: 900px;
   }
 }
 

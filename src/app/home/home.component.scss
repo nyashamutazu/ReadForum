@@ -76,9 +76,13 @@
   justify-content: center;
   transition: all 0.3s;
   cursor: pointer;
-  margin-bottom: 40px;
+  margin-right: 10px;
   color: unset;
   text-decoration: none;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 
   &:hover {
     background: var(--color-quad);
@@ -87,21 +91,18 @@
   }
 
   &__container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 150px));
-    grid-template-rows: auto;
-    grid-column-gap: 20px;
+    display: flex;
   }
 
   &__main {
     background: var(--color-secondary);
 
-    .heading__tertiary { 
-        color: #fff;
+    .heading__tertiary {
+      color: #fff;
     }
 
     .icon {
-      fill: #fff
+      fill: #fff;
     }
   }
 
@@ -129,5 +130,21 @@
   }
 
   &__link {
+  }
+}
+
+.flex {
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+  }
+
+  &__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
 }

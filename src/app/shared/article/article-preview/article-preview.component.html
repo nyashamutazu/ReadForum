@@ -13,8 +13,8 @@
         <div class="article__preview--body">
             <a [routerLink]="['/article', article.slug]" class="article__preview--link">
 
-                <p class="article__preview--text">{{ article.description }}</p>
-                <ul class="tag__list">
+                <p class="article__preview--text">{{ article.description.split(' ').length > 18 ? article.description.split(' ').slice(0, 18).join(' ') + '...' : article.description }}</p>
+                <ul class="tag__list" *ngIf="article.tagList.length > 0">
                     <li class="tag__item" *ngFor="let tag of article.tagList">
                         {{ tag }}
                     </li>

@@ -1,34 +1,53 @@
 <nav class="nav__bar">
     <div class="container__nav">
         <a routerLink="/" class="nav__logo">
-            <img src="https://i.ya-webdesign.com/images/green-logo-png-13.png" alt="" class="nav__logo--img">
+            <img src="https://otranscribe.com/favicon.png" alt="" class="nav__logo--img">
         </a>
 
         <ul class="nav__list">
             <li class="nav__item nav__search">
                 <form class="nav__search--form" [formGroup]="searchForm" (submit)="search()">
-                    <div class="nav__search--controller nav__search--controller-search">
-                        <h5 class="nav__search--small-title">Search By</h5>
-                        <div class="nav__search--controller-content">
-                            <input type="radio" formControlName="radio" value="account" id="account"
-                                class="nav__search--radio">
-                            <label for="account" class="nav__search--label">Account</label>
-                            <input type="radio" formControlName="radio" value="article" id="article"
-                                class="nav__search--radio">
-                            <label for="article" class="nav__search--label">Article</label>
-                            <input type="radio" formControlName="radio" value="trending" id="trending"
-                                class="nav__search--radio">
-                            <label for="trending" class="nav__search--label">Trending</label>
-                        </div>
-                    </div>
                     <div class="nav__search--controller">
-                        <button class="nav__search--btn" type="submit">
-                            <svg class="nav__search--icon">
-                                <use xlink:href="/assets/icons.svg#icon-search"></use>
-                            </svg>
-                        </button>
-                        <input type="search" formControlName="search" placeholder="Search articles and more..." required
-                            class="nav__search--input">
+                        <app-on-click>
+                            <div button class="nav__search--input-container">
+                                <button class="nav__search--btn" type="submit">
+                                    <svg class="nav__search--icon">
+                                        <use xlink:href="/assets/icons.svg#icon-search"></use>
+                                    </svg>
+                                </button>
+                                <input type="search" formControlName="search" placeholder="Search articles and more..."
+                                    required class="nav__search--input">
+                            </div>
+                            <div dropdown class="nav__search--footer">
+                                <div class="nav__search--dropdown">
+                                    <div class="nav__search--dropdown-container">
+                                        <h5 class="nav__search--small-title">Search By</h5>
+                                        <div class="nav__search--dropdown-content">
+                                            <input type="radio" formControlName="radio" value="account" id="account"
+                                                class="nav__search--radio">
+                                            <label for="account" class="nav__search--label">Account</label>
+                                            <input type="radio" formControlName="radio" value="article" id="article"
+                                                class="nav__search--radio">
+                                            <label for="article" class="nav__search--label">Article</label>
+                                            <input type="radio" formControlName="radio" value="trending" id="trending"
+                                                class="nav__search--radio">
+                                            <label for="trending" class="nav__search--label">Trending</label>
+                                            <p class="nav__search--error">Please select a seach by</p>
+                                        </div>
+                                    </div>
+                                    <div class="nav__search--dropdown-container">
+                                        <h5 class="nav__search--small-title">Currently Trending</h5>
+                                        <div class="nav__search--dropdown-trending">
+                                            <a href="" class="nav__search--dropdown-link">Anthony Joshua</a>
+                                            <a href="" class="nav__search--dropdown-link">Anthony Joshua</a>
+                                            <a href="" class="nav__search--dropdown-link">Anthony Joshua</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </app-on-click>
+
+
                     </div>
                 </form>
             </li>
@@ -41,7 +60,7 @@
                     routerLinkActive="active">Sign Up</a></li>
         </ul>
 
-        <ul *appShowAuthed="true" class="nav__list">
+        <ul *appShowAuthed="true" class="nav__list nav__authentication">
             <li class="nav__item nav__item--dropdown">
                 <a [routerLink]="['/profile', user.username]" class="nav__link">
                     <img [src]="user.profileImage" class="nav__profile--image" alt=""></a>
