@@ -1,6 +1,48 @@
 # ReadForum
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
+[![Build Status]
+
+## How to Use This Repository
+
+Read Forum is an open source application for authors [writers, bloggers and publishers] which allows multiple host to write, share and scale their articles.
+
+## Prerequisites
+
+Make sure that you have [Nodejs](https://nodejs.org/en/download/) on your machine.
+
+
+You might want to use [venv](https://nodejs.org/en/docs/) standard Node library
+to create virtual environments and have Node, npm and all dependent packages to be installed and 
+served from the local project directory to avoid messing with system wide packages and their 
+versions.
+
+You may check your Node version by running:
+
+```bash
+node --version
+```
+
+Note that in this repository whenever you see `node` it will be assumed that it is Node.
+
+
+**Installing dependencies**
+
+Install all dependencies that are required for the project by running:
+
+```bash
+npm install 
+```
+
+##### You have a working [ReadForum].
+
+```
+git clone https://github.com/nyashamutazu/ReadForum
+cd ReadForum
+```
+
+## Supporting the project
+
+You may support this project via ❤️️ [GitHub]
 
 ## Development server
 
