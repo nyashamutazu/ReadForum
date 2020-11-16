@@ -1,1 +1,1 @@
-exports.DATABASE_URL = "mongodb+srv://AdminUser:Admin123@cluster0.pkixx.mongodb.net/db?retryWrites=true&w=majority";
+exports.DATABASE_URL = "";
